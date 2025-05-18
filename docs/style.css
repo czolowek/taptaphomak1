@@ -6,17 +6,92 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  /* Тёмный градиент с глубиной в сине-красной гамме */
-  background: linear-gradient(135deg, #0a1535 0%, #1a0a20 100%);
+  /* ИМБА Ультра крутой градиент для красного кракена в стиле 1win */
+  background: linear-gradient(135deg, #040b29 0%, #100517 30%, #1e040e 70%, #22040b 100%);
   background-attachment: fixed;
   overflow: hidden;
   touch-action: manipulation;
+  position: relative;
+}
+
+/* Супер-эффект сияния для фона в центре (как в 1win) */
+body:before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 0, 0, 0.08) 0%, 
+    rgba(255, 0, 128, 0.05) 25%, 
+    rgba(0, 64, 255, 0.05) 50%, 
+    rgba(0, 0, 0, 0) 70%);
+  z-index: -2;
+  pointer-events: none;
+  animation: glow-breath 8s ease-in-out infinite alternate;
+}
+
+/* Добавляем светящиеся линии как в 1win */
+body:after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(90deg, transparent 99.5%, rgba(255, 0, 0, 0.05) 99.5%),
+    linear-gradient(0deg, transparent 99.5%, rgba(255, 0, 0, 0.05) 99.5%);
+  background-size: 30px 30px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.4;
+  animation: grid-pulse 10s linear infinite;
+}
+
+/* Добавляем дымку и глубину для фона */
+.depth-layer {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 0, 255, 0.05) 0%, rgba(0, 0, 0, 0) 50%);
+  z-index: -3;
+  pointer-events: none;
+  animation: depth-shift 20s ease infinite alternate;
+}
+
+/* Анимация дыхания свечения */
+@keyframes glow-breath {
+  0% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+  100% { opacity: 0.3; transform: scale(1); }
+}
+
+/* Анимация пульсации сетки */
+@keyframes grid-pulse {
+  0% { background-position: 0 0; opacity: 0.2; }
+  50% { opacity: 0.6; }
+  100% { background-position: 30px 30px; opacity: 0.2; }
+}
+
+/* Анимация смещения слоев глубины */
+@keyframes depth-shift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 5% 5%; }
+  100% { background-position: 0% 0%; }
 }
 
 body {
   font-family: 'Orbitron', 'Arial', sans-serif;
   color: #ffffff;
   text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+  position: relative;
 }
 
 button {
@@ -39,7 +114,7 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0a1535 0%, #1a0a20 100%);
+  background: linear-gradient(135deg, #0a1535 0%, #1a0a20 50%, #2d0a15 100%);
   display: none;
   justify-content: center;
   align-items: center;
@@ -149,7 +224,7 @@ button {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #050d24 0%, #140519 100%);
+  background: linear-gradient(135deg, #050d24 0%, #140519 50%, #250a14 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -247,6 +322,7 @@ button {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 0, 0, 0.2);
 }
 
 .currency-display {
@@ -264,17 +340,49 @@ button {
   justify-content: center;
   margin-right: 10px;
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.5), 0 0 20px rgba(0, 0, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.coin-icon:after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: rotate(45deg);
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 .coin-icon i {
   color: white;
   font-size: 18px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 #score {
   font-size: 24px;
   font-weight: bold;
   color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.score-updated {
+  animation: score-pulse 0.3s ease;
+}
+
+@keyframes score-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); color: #ffcc00; text-shadow: 0 0 15px rgba(255, 204, 0, 0.9); }
+  100% { transform: scale(1); }
 }
 
 .stats-container {
@@ -290,11 +398,20 @@ button {
   border-radius: 15px;
   font-size: 12px;
   white-space: nowrap;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .stat-item i {
   color: #ffcc00;
   margin-right: 5px;
+  text-shadow: 0 0 5px rgba(255, 204, 0, 0.7);
 }
 
 .multiplier {
@@ -321,6 +438,8 @@ button {
   align-items: center;
   padding: 8px 15px;
   gap: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .energy-icon {
@@ -340,6 +459,7 @@ button {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .energy-bar {
@@ -348,6 +468,27 @@ button {
   background: linear-gradient(90deg, #18f2b2, #0bf);
   border-radius: 3px;
   transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.energy-bar:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  animation: energyFlow 2s linear infinite;
+}
+
+@keyframes energyFlow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 #energy-text {
@@ -381,75 +522,1089 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 15px;
   padding: 10px 0;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Улучшение четкости текста */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.menu-button::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle at 50% 50%, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu-button:hover::before {
+  opacity: 1;
 }
 
 .menu-button i {
-  font-size: 20px;
+  font-size: 22px;
   margin-bottom: 5px;
   color: white;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 2;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
 }
 
 .menu-button span {
-  font-size: 10px;
+  font-size: 11px;
   color: white;
-  opacity: 0.8;
+  opacity: 0.9;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 2;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.menu-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.menu-button:hover i {
+  transform: scale(1.2);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+}
+
+.menu-button:hover span {
+  opacity: 1;
+  transform: translateY(3px);
+  letter-spacing: 0.8px;
 }
 
 .menu-button:active {
-  transform: scale(0.95);
-  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 255, 255, 0.15) inset;
+  transition: all 0.1s ease;
 }
 
-.indicator {
+/* Улучшенный эффект нажатия кнопок с волной */
+.button-clicked {
+  animation: button-press 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes button-press {
+  0% { transform: scale(1); }
+  30% { transform: scale(0.9); }
+  50% { transform: scale(0.95); }
+  70% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+.button-click-wave {
   position: absolute;
-  top: -5px;
-  right: -5px;
-  background: #ff3b30;
-  color: white;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 70%, rgba(255,255,255,0) 100%);
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  transform: translate(-50%, -50%);
+  opacity: 0.9;
+  z-index: 1;
+  animation: button-wave 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes button-wave {
+  0% { width: 5px; height: 5px; opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { width: 150px; height: 150px; opacity: 0; }
+}
+
+/* Дополнительный эффект свечения при клике */
+.button-click-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  opacity: 0.8;
+  z-index: 1;
+  animation: button-glow 0.6s ease-out forwards;
+}
+
+@keyframes button-glow {
+  0% { opacity: 0.8; box-shadow: 0 0 5px rgba(255, 255, 255, 0.5) inset; }
+  100% { opacity: 0; box-shadow: 0 0 30px rgba(255, 255, 255, 0) inset; }
+}
+
+/* СУПЕР-МЕГА-ИМБА ЭФФЕКТЫ ДЛЯ КНОПКИ ЛИДЕРОВ НА МАКСИМАЛКАХ!!! */
+#leaderboard-btn {
+  background: linear-gradient(145deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.3));
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2), 0 0 25px rgba(255, 215, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1;
+  transform-style: preserve-3d;
+  perspective: 500px;
+}
+
+/* Усиленный золотой край с 3D эффектом */
+#leaderboard-btn::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #ffd700, 
+    #ffaa00, 
+    #ff8c00, 
+    #ffcc00, 
+    #ffe55c, 
+    #ffd700);
+  background-size: 400% 400%;
+  z-index: -1;
+  border-radius: 17px;
+  animation: gold-border-flow 3s ease infinite;
+  opacity: 0.7;
+  filter: blur(2.5px);
+  transform: translateZ(-10px);
+}
+
+/* Основной сверхмощный блеск кнопки */
+#leaderboard-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent);
+  transform: rotate(45deg);
+  animation: leaderboard-shine 2.5s infinite;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+/* Золотые частицы с искрами */
+#leaderboard-btn .gold-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Внутреннее сияние */
+#leaderboard-btn .inner-glow {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 215, 0, 0.3) 0%, 
+    rgba(255, 215, 0, 0.1) 60%, 
+    rgba(255, 215, 0, 0) 70%);
+  border-radius: 15px;
+  z-index: 0;
+  opacity: 0;
+  animation: inner-glow-pulse 3s ease-in-out infinite alternate;
+}
+
+/* Пульсирующие точки внутри кнопки */
+#leaderboard-btn .gold-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: rgba(255, 215, 0, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700;
+  animation: gold-star-twinkle 3s infinite;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+/* Анимация золотой звезды в кнопке */
+@keyframes gold-star-twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* Расширенная анимация золотой границы */
+@keyframes gold-border-flow {
+  0% { background-position: 0% 50%; opacity: 0.6; }
+  25% { opacity: 0.9; }
+  50% { background-position: 100% 50%; opacity: 0.7; }
+  75% { opacity: 0.9; }
+  100% { background-position: 0% 50%; opacity: 0.6; }
+}
+
+/* Сверхмощный блеск кнопки */
+@keyframes leaderboard-shine {
+  0% { transform: translate(-100%, -100%) rotate(45deg); opacity: 0.5; }
+  10%, 100% { transform: translate(100%, 100%) rotate(45deg); opacity: 0; }
+}
+
+/* Анимация внутреннего свечения */
+@keyframes inner-glow-pulse {
+  0% { opacity: 0.1; transform: scale(0.9); }
+  100% { opacity: 0.6; transform: scale(1.1); }
+}
+
+/* Ультра-улучшенная иконка трофея */
+#leaderboard-btn i {
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.9);
+  z-index: 2;
+  position: relative;
+  font-size: 24px;
+  transform: translateZ(5px);
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Огненный текст под иконкой */
+#leaderboard-btn span {
+  background: linear-gradient(to right, #ffd700, #ff8c00, #ff4500);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 5px rgba(255, 165, 0, 0.4);
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  transform: translateZ(5px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Супер-мега эффекты при наведении */
+#leaderboard-btn:hover {
+  transform: translateY(-7px) scale(1.08) rotateX(5deg);
+  background: linear-gradient(145deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.4));
+  box-shadow: 0 15px 30px rgba(255, 165, 0, 0.3), 0 0 50px rgba(255, 215, 0, 0.25);
+  border-color: rgba(255, 215, 0, 0.7);
+}
+
+/* Ультра-сияние иконки при наведении */
+#leaderboard-btn:hover i {
+  animation: trophy-glow-ultimate 1s infinite alternate;
+  transform: scale(1.4) translateZ(15px);
+  filter: drop-shadow(0 0 8px rgba(255, 165, 0, 0.8));
+}
+
+/* Улучшенный текст при наведении */
+#leaderboard-btn:hover span {
+  animation: text-flicker 2s infinite alternate;
+  letter-spacing: 1px;
+  transform: translateY(3px) translateZ(5px);
+}
+
+/* Супер-пульсация при наведении */
+@keyframes trophy-glow-ultimate {
+  0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.9), 0 0 20px rgba(255, 165, 0, 0.5); }
+  50% { text-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 125, 0, 0.8), 0 0 50px rgba(255, 69, 0, 0.4); }
+  100% { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 140, 0, 0.9), 0 0 60px rgba(255, 69, 0, 0.5); }
+}
+
+/* Мерцание текста */
+@keyframes text-flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { 
+    opacity: 1;
+    text-shadow: 0 0 4px rgba(255, 215, 0, 0.6), 0 0 11px rgba(255, 165, 0, 0.8), 0 0 19px rgba(255, 69, 0, 0.5);
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% { 
+    opacity: 0.6;
+    text-shadow: none;
+  }
+}
+
+/* Ультра-супер эффект при клике */
+#leaderboard-btn:active {
+  transform: scale(0.92) translateY(2px);
+  background: linear-gradient(145deg, rgba(255, 165, 0, 0.4), rgba(255, 215, 0, 0.3));
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.4) inset;
+  border-color: rgba(255, 215, 0, 0.8);
+  transition: all 0.1s ease;
+}
+
+/* Эффект взрыва при клике */
+#leaderboard-btn:active::before {
+  animation: gold-border-explosion 0.5s ease;
+}
+
+/* Ударная волна при клике */
+@keyframes gold-border-explosion {
+  0% { transform: scale(0.95); opacity: 0.9; filter: blur(1px); }
+  50% { transform: scale(1.05); opacity: 1; filter: blur(3px); }
+  100% { transform: scale(0.95); opacity: 0.9; filter: blur(1px); }
+}
+
+@keyframes trophy-glow {
+  0% { text-shadow: 0 0 8px rgba(255, 215, 0, 0.8); }
+  100% { text-shadow: 0 0 20px rgba(255, 215, 0, 1); }
+}
+
+@keyframes subtleWaves {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(5px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* УЛЬТРА-СУПЕР-МЕГА ЭФФЕКТЫ ДЛЯ КНОПКИ ДРУЗЕЙ - ТОТАЛЬНАЯ ИМБА! */
+#friends-btn {
+  background: linear-gradient(145deg, rgba(0, 132, 255, 0.2), rgba(0, 210, 255, 0.3));
+  border: 1px solid rgba(0, 132, 255, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.2), 0 0 25px rgba(0, 162, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1;
+  transform-style: preserve-3d;
+  perspective: 500px;
+}
+
+/* Космический неоновый край */
+#friends-btn::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #00a1ff, 
+    #0084ff, 
+    #00c7ff, 
+    #0055ff, 
+    #00e1ff, 
+    #0084ff);
+  background-size: 400% 400%;
+  z-index: -1;
+  border-radius: 17px;
+  animation: neon-border-flow 3s ease infinite;
+  opacity: 0.7;
+  filter: blur(2.5px);
+  transform: translateZ(-10px);
+}
+
+/* Футуристический блеск кнопки */
+#friends-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent);
+  transform: rotate(45deg);
+  animation: friends-shine 2.5s infinite;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+/* Цифровые частицы эффекта */
+#friends-btn .blue-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Внутреннее синее сияние */
+#friends-btn .inner-glow {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  background: radial-gradient(ellipse at center, 
+    rgba(0, 132, 255, 0.3) 0%, 
+    rgba(0, 162, 255, 0.1) 60%, 
+    rgba(0, 132, 255, 0) 70%);
+  border-radius: 15px;
+  z-index: 0;
+  opacity: 0;
+  animation: inner-blue-glow-pulse 3s ease-in-out infinite alternate;
+}
+
+/* Электрические пульсирующие точки вокруг индикатора онлайн */
+#friends-btn .blue-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: rgba(0, 162, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 5px #0084ff, 0 0 10px #00a1ff;
+  animation: blue-dot-pulse 3s infinite;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+/* Виртуальные данные вокруг кнопки - matrix effect */
+#friends-btn .data-stream {
+  position: absolute;
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  color: rgba(0, 210, 255, 0.4);
+  white-space: nowrap;
+  opacity: 0.3;
+  animation: data-stream-float 6s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Анимация потока данных */
+@keyframes data-stream-float {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.3; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-20px) translateX(10px); opacity: 0; }
+}
+
+/* Анимация синей точки */
+@keyframes blue-dot-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* Расширенная анимация неонового края */
+@keyframes neon-border-flow {
+  0% { background-position: 0% 50%; opacity: 0.6; }
+  25% { opacity: 0.9; }
+  50% { background-position: 100% 50%; opacity: 0.7; }
+  75% { opacity: 0.9; }
+  100% { background-position: 0% 50%; opacity: 0.6; }
+}
+
+/* Улучшенный блеск кнопки */
+@keyframes friends-shine {
+  0% { transform: translate(-100%, -100%) rotate(45deg); opacity: 0.5; }
+  10%, 100% { transform: translate(100%, 100%) rotate(45deg); opacity: 0; }
+}
+
+/* Анимация внутреннего синего свечения */
+@keyframes inner-blue-glow-pulse {
+  0% { opacity: 0.1; transform: scale(0.9); }
+  100% { opacity: 0.6; transform: scale(1.1); }
+}
+
+/* Ультра-улучшенная иконка друзей */
+#friends-btn i {
+  color: #0084ff;
+  text-shadow: 0 0 10px rgba(0, 132, 255, 0.9);
+  z-index: 2;
+  position: relative;
+  font-size: 24px;
+  transform: translateZ(5px);
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Неоновый текст под иконкой */
+#friends-btn span {
+  background: linear-gradient(to right, #0084ff, #00c7ff, #00e1ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 5px rgba(0, 162, 255, 0.4);
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  transform: translateZ(5px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Супер-мега эффекты при наведении */
+#friends-btn:hover {
+  transform: translateY(-7px) scale(1.08) rotateX(5deg);
+  background: linear-gradient(145deg, rgba(0, 132, 255, 0.3), rgba(0, 210, 255, 0.4));
+  box-shadow: 0 15px 30px rgba(0, 132, 255, 0.3), 0 0 50px rgba(0, 162, 255, 0.25);
+  border-color: rgba(0, 132, 255, 0.7);
+}
+
+/* Мегасияние иконки при наведении */
+#friends-btn:hover i {
+  animation: friends-icon-glow-ultimate 1s infinite alternate;
+  transform: scale(1.4) translateZ(15px);
+  filter: drop-shadow(0 0 8px rgba(0, 162, 255, 0.8));
+}
+
+/* Улучшенный текст при наведении */
+#friends-btn:hover span {
+  animation: blue-text-flicker 2s infinite alternate;
+  letter-spacing: 1px;
+  transform: translateY(3px) translateZ(5px);
+}
+
+/* Мега-пульсация при наведении */
+@keyframes friends-icon-glow-ultimate {
+  0% { text-shadow: 0 0 10px rgba(0, 132, 255, 0.9), 0 0 20px rgba(0, 210, 255, 0.5); }
+  50% { text-shadow: 0 0 15px rgba(0, 132, 255, 1), 0 0 30px rgba(0, 210, 255, 0.8), 0 0 50px rgba(0, 255, 255, 0.4); }
+  100% { text-shadow: 0 0 20px rgba(0, 132, 255, 1), 0 0 40px rgba(0, 210, 255, 0.9), 0 0 60px rgba(0, 255, 255, 0.5); }
+}
+
+/* Цифровое мерцание текста */
+@keyframes blue-text-flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { 
+    opacity: 1;
+    text-shadow: 0 0 4px rgba(0, 132, 255, 0.6), 0 0 11px rgba(0, 162, 255, 0.8), 0 0 19px rgba(0, 200, 255, 0.5);
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% { 
+    opacity: 0.6;
+    text-shadow: none;
+  }
+}
+
+/* Ультра-супер эффект при клике */
+#friends-btn:active {
+  transform: scale(0.92) translateY(2px);
+  background: linear-gradient(145deg, rgba(0, 132, 255, 0.4), rgba(0, 162, 255, 0.3));
+  box-shadow: 0 0 20px rgba(0, 132, 255, 0.4) inset;
+  border-color: rgba(0, 132, 255, 0.8);
+  transition: all 0.1s ease;
+}
+
+/* Эффект цифровой волны при клике */
+#friends-btn:active::before {
+  animation: blue-border-pulse 0.5s ease;
+}
+
+/* Усиленная пульсация онлайн-индикатора при наведении */
+#friends-btn:hover .online-indicator {
+  animation: online-indicator-pulse-extreme 1s infinite alternate;
+  box-shadow: 0 0 20px rgba(0, 132, 255, 1);
+  transform: scale(1.1) translateZ(10px);
+}
+
+/* Экстремальная пульсация индикатора */
+@keyframes online-indicator-pulse-extreme {
+  0% { transform: scale(1) translateZ(10px); box-shadow: 0 0 15px rgba(0, 132, 255, 0.8); filter: brightness(1); }
+  100% { transform: scale(1.15) translateZ(15px); box-shadow: 0 0 25px rgba(0, 210, 255, 1), 0 0 40px rgba(0, 255, 255, 0.5); filter: brightness(1.3); }
+}
+
+/* Цифровая ударная волна */
+@keyframes blue-border-pulse {
+  0% { transform: scale(0.95); opacity: 0.9; filter: blur(1px); }
+  50% { transform: scale(1.05); opacity: 1; filter: blur(3px); }
+  100% { transform: scale(0.95); opacity: 0.9; filter: blur(1px); }
+}
+
+/* Стандартная анимация свечения */
+@keyframes friends-icon-glow {
+  0% { text-shadow: 0 0 8px rgba(0, 132, 255, 0.8); }
+  100% { text-shadow: 0 0 20px rgba(0, 132, 255, 1); }
+}
+
+/* СУПЕР-ИМБА ИНДИКАТОР ОНЛАЙН-ИГРОКОВ В СТИЛЕ 1WIN */
+.online-indicator {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: linear-gradient(135deg, #0084ff, #00c7ff, #00e1ff);
+  color: white;
+  border-radius: 10px;
+  width: auto;
+  height: 22px;
+  padding: 0 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 11px;
   font-weight: bold;
-  box-shadow: 0 0 10px rgba(255, 59, 48, 0.7);
+  box-shadow: 0 0 12px rgba(0, 132, 255, 0.8), 0 0 20px rgba(0, 210, 255, 0.5);
+  z-index: 3;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 0 5px rgba(0, 162, 255, 0.9);
+  transform-style: preserve-3d;
+  transform: translateZ(5px);
+  letter-spacing: 0.5px;
 }
 
-.new-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background: #ff9500;
-  color: white;
-  border-radius: 5px;
-  padding: 2px 5px;
-  font-size: 10px;
-  font-weight: bold;
-  box-shadow: 0 0 10px rgba(255, 149, 0, 0.7);
+/* Цифровой голографический эффект для счетчика */
+#online-count {
+  position: relative;
+  z-index: 2;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 5px rgba(0, 210, 255, 0.9), 0 0 10px rgba(0, 210, 255, 0.5);
+  transform: translateZ(2px);
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 2px rgba(0, 162, 255, 0.8));
 }
 
-.new-badge-small {
+/* Анимация обновления счетчика онлайн - СУПЕР ВЕРСИЯ */
+#online-count.pulse-update {
+  animation: count-pulse-mega 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes count-pulse-mega {
+  0% { transform: scale(1) translateZ(2px); }
+  20% { transform: scale(1.6) translateZ(5px); color: #00ffcc; text-shadow: 0 0 10px #00ffcc, 0 0 20px rgba(0, 210, 255, 0.8); }
+  40% { transform: scale(1.3) translateZ(4px); color: #00f7ff; text-shadow: 0 0 15px rgba(0, 247, 255, 0.9); }
+  60% { transform: scale(1.4) translateZ(5px); color: #00e1ff; text-shadow: 0 0 12px rgba(0, 225, 255, 0.9); }
+  100% { transform: scale(1) translateZ(2px); }
+}
+
+/* Улучшенный эффект свечения для индикатора с цифровым размытием */
+.online-indicator:before {
+  content: '';
   position: absolute;
   top: -3px;
+  left: -3px;
   right: -3px;
-  background: #ff9500;
+  bottom: -3px;
+  background: linear-gradient(45deg, 
+    #0084ff, 
+    #00c7ff, 
+    #0055ff, 
+    #00e1ff, 
+    #0084ff);
+  background-size: 400% 400%;
+  border-radius: 12px;
+  z-index: -1;
+  opacity: 0.7;
+  filter: blur(2px);
+  animation: online-indicator-glow 3s infinite alternate;
+}
+
+/* Дополнительный эффект внутреннего свечения */
+.online-indicator:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, 
+    rgba(0, 210, 255, 0.2) 0%, 
+    rgba(0, 132, 255, 0.1) 60%, 
+    transparent 70%);
+  z-index: 0;
+  opacity: 0.6;
+  animation: inner-online-glow 2s ease-in-out infinite alternate;
+}
+
+/* Улучшенная пульсирующая точка с цифровым эффектом */
+.online-indicator .pulse {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: #00ff88;
+  border-radius: 50%;
+  margin-right: 5px;
+  position: relative;
+  box-shadow: 0 0 8px #00ff88, 0 0 12px rgba(0, 255, 136, 0.5);
+  z-index: 1;
+  transform: translateZ(3px);
+}
+
+/* Многослойная пульсация */
+.online-indicator .pulse:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 255, 136, 0.9);
+  border-radius: 50%;
+  animation: pulse-dot-enhanced 1.5s ease-in-out infinite;
+  z-index: 1;
+}
+
+.online-indicator .pulse:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background-color: rgba(0, 255, 136, 0.3);
+  border-radius: 50%;
+  animation: pulse-ring-enhanced 1.5s ease-out infinite;
+  z-index: 0;
+}
+
+/* Цифровой эффект пульсации */
+@keyframes pulse-dot-enhanced {
+  0% { transform: scale(1); opacity: 1; background-color: #00ff88; }
+  33% { background-color: #00ffbb; }
+  66% { background-color: #00f7ff; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; background-color: #00ff88; }
+}
+
+/* Кольцевой эффект пульсации */
+@keyframes pulse-ring-enhanced {
+  0% { transform: scale(0.7); opacity: 0.3; }
+  40% { opacity: 0.5; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* Улучшенное свечение для индикатора */
+@keyframes online-indicator-glow {
+  0% { background-position: 0% 50%; opacity: 0.5; filter: blur(2px); }
+  25% { opacity: 0.7; filter: blur(2.5px); }
+  50% { background-position: 100% 50%; opacity: 0.6; filter: blur(2px); }
+  75% { opacity: 0.8; filter: blur(3px); }
+  100% { background-position: 0% 50%; opacity: 0.5; filter: blur(2px); }
+}
+
+/* Внутреннее свечение индикатора */
+@keyframes inner-online-glow {
+  0% { opacity: 0.3; transform: scale(0.9); }
+  100% { opacity: 0.7; transform: scale(1.1); }
+}
+
+/* Индикатор становится еще ярче при наведении на кнопку друзей */
+#friends-btn:hover .online-indicator {
+  box-shadow: 0 0 15px rgba(0, 132, 255, 1), 0 0 25px rgba(0, 210, 255, 0.7);
+  border-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1) translateZ(8px);
+}
+
+/* Улучшаем внешний вид индикатора при наведении */
+#friends-btn:hover #online-count {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(0, 210, 255, 1), 0 0 15px rgba(0, 255, 255, 0.8);
+  transform: scale(1.1) translateZ(4px);
+}
+
+.pulse {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1eff47;
+  margin-right: 4px;
+  box-shadow: 0 0 5px #1eff47;
+  animation: pulse-dot 1.5s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.8); opacity: 0.7; }
+}
+
+/* СУПЕР-ИМБА ИНДИКАТОР ДЛЯ КНОПКИ ЗАДАНИЙ В СТИЛЕ 1WIN */
+.indicator {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: linear-gradient(135deg, #ff3b30, #ff9500, #ff5e3a);
+  color: white;
+  border-radius: 12px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 59, 48, 0.7), 0 0 20px rgba(255, 149, 0, 0.4);
+  z-index: 3;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(139, 0, 0, 0.8);
+  transform-style: preserve-3d;
+  transform: translateZ(5px);
+  letter-spacing: 0.5px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Улучшенный эффект свечения для индикатора заданий */
+.indicator:before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, 
+    #ff3b30, 
+    #ff9500, 
+    #ff2d55, 
+    #ff8000, 
+    #ff3b30);
+  background-size: 400% 400%;
+  border-radius: 12px;
+  z-index: -1;
+  opacity: 0.7;
+  filter: blur(2px);
+  animation: task-indicator-glow 3s infinite alternate;
+}
+
+/* Эффект внутреннего свечения индикатора */
+.indicator:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 59, 48, 0.2) 0%, 
+    rgba(255, 149, 0, 0.1) 60%, 
+    transparent 70%);
+  z-index: 0;
+  opacity: 0.6;
+  animation: inner-red-glow 2s ease-in-out infinite alternate;
+}
+
+/* Пульсация свечения границы */
+@keyframes task-indicator-glow {
+  0% { background-position: 0% 50%; opacity: 0.5; filter: blur(2px); }
+  25% { opacity: 0.7; filter: blur(2.5px); }
+  50% { background-position: 100% 50%; opacity: 0.6; filter: blur(2px); }
+  75% { opacity: 0.8; filter: blur(3px); }
+  100% { background-position: 0% 50%; opacity: 0.5; filter: blur(2px); }
+}
+
+/* Внутреннее свечение индикатора */
+@keyframes inner-red-glow {
+  0% { opacity: 0.3; transform: scale(0.9); }
+  100% { opacity: 0.7; transform: scale(1.1); }
+}
+
+/* Кнопка заданий улучшает индикатор при наведении */
+#tasks-btn:hover .indicator {
+  box-shadow: 0 0 15px rgba(255, 59, 48, 1), 0 0 25px rgba(255, 149, 0, 0.7);
+  transform: scale(1.1) translateZ(8px);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Анимация при обновлении индикатора заданий */
+.indicator.update {
+  animation: task-count-pulse 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes task-count-pulse {
+  0% { transform: scale(1) translateZ(5px); }
+  20% { transform: scale(1.6) translateZ(10px); color: #ffff00; text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 149, 0, 0.8); }
+  40% { transform: scale(1.3) translateZ(8px); color: #ffdd00; text-shadow: 0 0 15px rgba(255, 200, 0, 0.9); }
+  60% { transform: scale(1.4) translateZ(10px); color: #ffe100; text-shadow: 0 0 12px rgba(255, 225, 0, 0.9); }
+  100% { transform: scale(1) translateZ(5px); }
+}
+
+/* СУПЕР-ИМБА ЭФФЕКТ ДЛЯ БЕЙДЖА NEW В СТИЛЕ 1WIN */
+.new-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: linear-gradient(135deg, #ff2d55, #ff3b30, #ff9500);
+  color: white;
+  border-radius: 10px;
+  padding: 3px 6px;
+  font-size: 9px;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 59, 48, 0.7), 0 0 20px rgba(255, 149, 0, 0.4);
+  z-index: 3;
+  transform-style: preserve-3d;
+  transform: translateZ(5px);
+  letter-spacing: 0.7px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(139, 0, 0, 0.8);
+  animation: new-badge-pulse 2s infinite alternate;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Сияющий край для бейджа NEW */
+.new-badge:before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #ff2d55, 
+    #ff3b30, 
+    #ff9500, 
+    #ff2d55);
+  background-size: 400% 400%;
+  border-radius: 10px;
+  z-index: -1;
+  opacity: 0.7;
+  filter: blur(2px);
+  animation: new-badge-glow 3s infinite alternate;
+}
+
+/* Внутреннее свечение бейджа */
+.new-badge:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 45, 85, 0.2) 0%, 
+    rgba(255, 59, 48, 0.1) 60%, 
+    transparent 70%);
+  z-index: 0;
+  opacity: 0.6;
+  animation: inner-badge-glow 2s ease-in-out infinite alternate;
+}
+
+/* Улучшенная пульсация бейджа */
+@keyframes new-badge-pulse {
+  0% { transform: scale(1) translateZ(5px); box-shadow: 0 0 10px rgba(255, 59, 48, 0.7); }
+  50% { transform: scale(1.15) rotate(-5deg) translateZ(8px); box-shadow: 0 0 15px rgba(255, 45, 85, 0.8), 0 0 25px rgba(255, 149, 0, 0.5); }
+  100% { transform: scale(1.1) translateZ(7px); box-shadow: 0 0 20px rgba(255, 149, 0, 0.9); }
+}
+
+/* Свечение границы бейджа */
+@keyframes new-badge-glow {
+  0% { background-position: 0% 50%; opacity: 0.6; filter: blur(1.5px); }
+  50% { background-position: 100% 50%; opacity: 0.8; filter: blur(2.5px); }
+  100% { background-position: 0% 50%; opacity: 0.6; filter: blur(1.5px); }
+}
+
+/* Внутреннее свечение бейджа */
+@keyframes inner-badge-glow {
+  0% { opacity: 0.3; transform: scale(0.9); }
+  100% { opacity: 0.7; transform: scale(1.1); }
+}
+
+/* Эффект при наведении на кнопку с бейджом */
+.menu-button:hover .new-badge {
+  transform: scale(1.2) translateZ(10px) rotate(-10deg);
+  box-shadow: 0 0 15px rgba(255, 45, 85, 0.8), 0 0 25px rgba(255, 59, 48, 0.5);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* ИМБА ЭФФЕКТ МАЛЕНЬКОГО КРАСНОГО ИНДИКАТОРА NEW В СТИЛЕ 1WIN */
+.new-badge-small {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: linear-gradient(135deg, #ff2d55, #ff3b30, #ff9500);
   color: white;
   border-radius: 50%;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 8px;
   font-weight: bold;
-  box-shadow: 0 0 5px rgba(255, 149, 0, 0.7);
+  box-shadow: 0 0 8px rgba(255, 59, 48, 0.7), 0 0 15px rgba(255, 149, 0, 0.4);
+  z-index: 3;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 1px rgba(139, 0, 0, 0.8);
+  transform-style: preserve-3d;
+  transform: translateZ(3px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: small-badge-pulse 2s infinite alternate;
+}
+
+/* Светящийся ореол маленького бейджа */
+.new-badge-small:before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #ff2d55, 
+    #ff3b30, 
+    #ff9500, 
+    #ff2d55);
+  background-size: 400% 400%;
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.7;
+  filter: blur(2px);
+  animation: small-badge-glow 3s infinite alternate;
+}
+
+/* Внутреннее свечение маленького бейджа */
+.new-badge-small:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 45, 85, 0.2) 0%, 
+    rgba(255, 59, 48, 0.1) 60%, 
+    transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+  opacity: 0.6;
+  animation: small-inner-glow 2s ease-in-out infinite alternate;
+}
+
+/* Улучшенная пульсация маленького бейджа */
+@keyframes small-badge-pulse {
+  0% { transform: scale(1) translateZ(3px); box-shadow: 0 0 8px rgba(255, 59, 48, 0.7); }
+  50% { transform: scale(1.15) translateZ(5px); box-shadow: 0 0 12px rgba(255, 45, 85, 0.8), 0 0 20px rgba(255, 149, 0, 0.5); }
+  100% { transform: scale(1.05) translateZ(4px); box-shadow: 0 0 15px rgba(255, 149, 0, 0.9); }
+}
+
+/* Свечение границы маленького бейджа */
+@keyframes small-badge-glow {
+  0% { background-position: 0% 50%; opacity: 0.6; filter: blur(1.5px); }
+  50% { background-position: 100% 50%; opacity: 0.8; filter: blur(2.5px); }
+  100% { background-position: 0% 50%; opacity: 0.6; filter: blur(1.5px); }
+}
+
+/* Внутреннее свечение маленького бейджа */
+@keyframes small-inner-glow {
+  0% { opacity: 0.3; transform: scale(0.9); }
+  100% { opacity: 0.7; transform: scale(1.1); }
+}
+
+/* Эффект при наведении на кнопку с маленьким бейджом */
+.menu-button:hover .new-badge-small {
+  transform: scale(1.3) translateZ(6px);
+  box-shadow: 0 0 15px rgba(255, 45, 85, 0.8), 0 0 25px rgba(255, 59, 48, 0.5);
+  border-color: rgba(255, 255, 255, 0.9);
 }
 
 /* Центральная зона с Кракеном */
@@ -462,18 +1617,167 @@ button {
   overflow: hidden;
 }
 
+#background-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bubble-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bubble {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: bubble-float linear infinite;
+}
+
+@keyframes bubble-float {
+  0% { transform: translate(0, 0); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translate(var(--tx), -100vh); opacity: 0; }
+}
+
+.glow-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 0, 0, 0.15) 0%,
+    rgba(0, 0, 255, 0.15) 50%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  border-radius: 50%;
+  filter: blur(20px);
+  animation: glow-pulse 4s infinite alternate;
+}
+
+@keyframes glow-pulse {
+  0% { 
+    transform: translate(-50%, -50%) scale(1);
+    background: radial-gradient(
+      circle,
+      rgba(255, 0, 0, 0.15) 0%,
+      rgba(0, 0, 255, 0.15) 50%,
+      rgba(0, 0, 0, 0) 70%
+    );
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    background: radial-gradient(
+      circle,
+      rgba(0, 0, 255, 0.15) 0%,
+      rgba(255, 0, 0, 0.15) 50%,
+      rgba(0, 0, 0, 0) 70%
+    );
+  }
+  100% { 
+    transform: translate(-50%, -50%) scale(1);
+    background: radial-gradient(
+      circle,
+      rgba(255, 0, 0, 0.15) 0%,
+      rgba(0, 0, 255, 0.15) 50%,
+      rgba(0, 0, 0, 0) 70%
+    );
+  }
+}
+
+/* СУПЕР-МЕГА-ИМБА КРАСНЫЙ КРАКЕН БЕЗ ФОНА В СТИЛЕ 1WIN */
 #kraken {
   width: 70%;
   max-width: 300px;
   height: auto;
-  filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.3)) drop-shadow(0 0 30px rgba(0, 0, 255, 0.3));
+  filter: 
+    drop-shadow(0 0 20px rgba(255, 0, 0, 0.6))
+    drop-shadow(0 0 30px rgba(255, 0, 0, 0.4))
+    brightness(1.2) 
+    contrast(1.2) 
+    saturate(1.3);
   transform-origin: center;
-  transition: transform 0.1s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   margin-top: -20px;
+  position: relative;
+  z-index: 2;
+  animation: kraken-float 6s ease-in-out infinite;
+  mix-blend-mode: screen; /* Делает фон прозрачным как в 1win */
 }
 
+/* Сияющий эффект вокруг кракена */
+#kraken::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 0, 0, 0.15) 0%, 
+    rgba(255, 0, 0, 0.1) 30%, 
+    rgba(255, 0, 0, 0) 70%);
+  z-index: -1;
+  pointer-events: none;
+  animation: kraken-glow 4s ease-in-out infinite alternate;
+}
+
+/* Плавание кракена */
+@keyframes kraken-float {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  25% { transform: translateY(-10px) rotate(1deg) scale(1.02); }
+  50% { transform: translateY(0) rotate(0deg) scale(1); }
+  75% { transform: translateY(10px) rotate(-1deg) scale(0.98); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+/* Свечение кракена */
+@keyframes kraken-glow {
+  0% { opacity: 0.5; transform: scale(0.95); filter: blur(10px); }
+  100% { opacity: 0.8; transform: scale(1.05); filter: blur(15px); }
+}
+
+/* Эффект при нажатии на кракена */
 #kraken:active {
-  transform: scale(0.95);
+  transform: scale(0.9);
+  filter: 
+    drop-shadow(0 0 30px rgba(255, 0, 0, 0.8))
+    drop-shadow(0 0 40px rgba(255, 0, 0, 0.6))
+    brightness(1.4) 
+    contrast(1.3) 
+    saturate(1.5);
+}
+
+/* Добавляем эффект взрыва при клике */
+#kraken:active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, 
+    rgba(255, 0, 0, 0.3) 0%, 
+    rgba(255, 0, 0, 0) 70%);
+  z-index: 1;
+  animation: kraken-click-explosion 0.5s ease-out forwards;
+}
+
+/* Анимация взрыва при клике */
+@keyframes kraken-click-explosion {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2); opacity: 0; }
 }
 
 #tap-effects {
@@ -483,6 +1787,181 @@ button {
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: 3;
+  perspective: 1000px;
+}
+
+/* УЛЬТРА-ИМБА ЭФФЕКТЫ ЧАСТИЦ ПРИ НАЖАТИИ НА КРАКЕНА В СТИЛЕ 1WIN */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 10;
+  box-shadow: 
+    0 0 15px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 255, 255, 0.6);
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 50, 50, 0.7) 50%,
+    rgba(255, 0, 0, 0.5) 70%,
+    transparent 100%);
+  transform-style: preserve-3d;
+  animation: particle-fade-enhanced 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+}
+
+/* Разные типы частиц для разнообразия */
+.particle.small {
+  width: 5px;
+  height: 5px;
+  filter: blur(1px);
+  animation-duration: 0.8s;
+}
+
+.particle.medium {
+  width: 10px;
+  height: 10px;
+  filter: blur(2px);
+  animation-duration: 1.2s;
+}
+
+.particle.large {
+  width: 15px;
+  height: 15px;
+  filter: blur(3px);
+  animation-duration: 1.5s;
+}
+
+/* Частицы с разными цветами */
+.particle.red {
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 50, 50, 0.7) 50%,
+    rgba(255, 0, 0, 0.5) 70%,
+    transparent 100%);
+  box-shadow: 
+    0 0 15px rgba(255, 0, 0, 0.8),
+    0 0 30px rgba(255, 0, 0, 0.6);
+}
+
+.particle.gold {
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 215, 0, 0.7) 50%,
+    rgba(255, 165, 0, 0.5) 70%,
+    transparent 100%);
+  box-shadow: 
+    0 0 15px rgba(255, 215, 0, 0.8),
+    0 0 30px rgba(255, 165, 0, 0.6);
+}
+
+.particle.blue {
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(30, 144, 255, 0.7) 50%,
+    rgba(0, 0, 255, 0.5) 70%,
+    transparent 100%);
+  box-shadow: 
+    0 0 15px rgba(30, 144, 255, 0.8),
+    0 0 30px rgba(0, 0, 255, 0.6);
+}
+
+/* Улучшенная анимация исчезновения частиц */
+@keyframes particle-fade-enhanced {
+  0% { 
+    transform: translateZ(10px) scale(0.2); 
+    opacity: 0; 
+  }
+  10% {
+    opacity: 0.9;
+  }
+  30% {
+    transform: translateZ(15px) scale(1.2);
+    opacity: 0.8;
+  }
+  100% { 
+    transform: translate(var(--x, 0px), var(--y, 0px)) scale(0); 
+    opacity: 0; 
+  }
+}
+
+/* Световой взрыв при нажатии */
+.tap-explosion {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 0, 0, 0.7) 30%,
+    rgba(255, 0, 0, 0.3) 60%,
+    transparent 100%);
+  transform: translate(-50%, -50%) scale(0.1);
+  opacity: 0.9;
+  z-index: 9;
+  animation: explosion-enhanced 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+  pointer-events: none;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.4);
+}
+
+/* Анимация взрыва */
+@keyframes explosion-enhanced {
+  0% { transform: translate(-50%, -50%) scale(0.1); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+}
+
+/* Дополнительные звездочки при нажатии */
+.tap-star {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+  z-index: 9;
+  animation: star-fly 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD700"><path d="M12 1l3.09 6.32L22 8.5l-5 4.87 1.18 6.88L12 17l-6.18 3.25L7 13.37 2 8.5l6.91-1.18L12 1z"/></svg>');
+  background-size: contain;
+  transform: translate(-50%, -50%) scale(0.1) rotate(0deg);
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+}
+
+/* Анимация звездочек */
+@keyframes star-fly {
+  0% { 
+    transform: translate(-50%, -50%) scale(0.1) rotate(0deg); 
+    opacity: 0.9; 
+  }
+  100% { 
+    transform: translate(var(--x, 0px), var(--y, 0px)) scale(1.5) rotate(var(--r, 0deg)); 
+    opacity: 0; 
+  }
+}
+
+/* Числовой индикатор увеличения счета */
+.score-indicator {
+  position: absolute;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
+  z-index: 11;
+  animation: score-float 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+  pointer-events: none;
+  opacity: 0;
+  user-select: none;
+}
+
+/* Анимация плавающего числа */
+@keyframes score-float {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(-50px) scale(1.2); opacity: 0; }
+}
+
+/* Правое меню */
+.side-menu.right {
+  padding-right: 10px;
 }
 
 /* ==========================================================================
@@ -496,6 +1975,7 @@ button {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   padding: 10px 0;
+  box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.3);
 }
 
 .nav-button {
@@ -503,41 +1983,39 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  opacity: 0.6;
-  transition: all 0.2s ease;
+  width: 70px;
+  transition: all 0.3s ease;
   padding: 5px 0;
-  position: relative;
+  border-radius: 10px;
 }
 
-.nav-button.active {
-  opacity: 1;
-}
-
-.nav-icon {
-  position: relative;
-  width: 35px;
-  height: 35px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 5px;
-}
-
-.nav-button.active .nav-icon {
-  background: linear-gradient(135deg, #ff0033 0%, #0066ff 100%);
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), 0 0 20px rgba(0, 0, 255, 0.3);
-}
-
-.nav-icon i {
+.nav-button i {
   font-size: 18px;
-  color: white;
+  margin-bottom: 5px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
 }
 
 .nav-button span {
   font-size: 10px;
-  color: white;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.nav-button.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-button.active i,
+.nav-button.active span {
+  opacity: 1;
+  color: #0084ff;
+  text-shadow: 0 0 5px rgba(0, 132, 255, 0.7);
+}
+
+.nav-button:hover:not(.active) i,
+.nav-button:hover:not(.active) span {
+  opacity: 0.9;
 }
 
 /* ==========================================================================
@@ -550,417 +2028,705 @@ button {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 100;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
+.modal.active {
+  display: flex;
+  animation: modal-appear 0.3s forwards;
+}
+
+@keyframes modal-appear {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 .modal-content {
-  background: rgba(10, 21, 53, 0.95);
+  background: linear-gradient(145deg, #0c1632 0%, #1c0a22 100%);
   border-radius: 20px;
   width: 90%;
-  max-width: 400px;
-  max-height: 90vh;
+  max-width: 450px;
+  max-height: 85vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 30px rgba(0, 102, 255, 0.3), 0 0 30px rgba(255, 0, 51, 0.3);
-  animation: modalAppear 0.3s forwards;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 132, 255, 0.2), 0 0 70px rgba(255, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: content-appear 0.3s ease both;
+  position: relative;
 }
 
-@keyframes modalAppear {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+@keyframes content-appear {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .modal-header {
-  padding: 15px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header h2 {
   margin: 0;
   font-size: 20px;
-  color: white;
+  font-weight: 600;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.close-button {
+.modal-header h2 i {
+  color: #0084ff;
+  text-shadow: 0 0 10px rgba(0, 132, 255, 0.7);
+}
+
+.close-btn {
   background: none;
   border: none;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-
-.close-button:hover {
-  opacity: 1;
-}
-
-.modal-tabs {
-  display: flex;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.tab {
-  flex: 1;
-  text-align: center;
-  padding: 10px;
-  font-size: 14px;
-  color: white;
-  opacity: 0.6;
-  transition: all 0.2s;
-  border-bottom: 2px solid transparent;
-}
-
-.tab.active {
-  opacity: 1;
-  border-bottom: 2px solid #0066ff;
-}
-
-.modal-body {
-  padding: 15px;
-  overflow-y: auto;
-  flex: 1;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* Магазин */
-.shop-item {
+  padding: 5px;
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  padding: 12px;
-  margin-bottom: 10px;
-  transition: all 0.2s;
+  justify-content: center;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+}
+
+/* Стили для модального окна рейтинга */
+.leaderboard-tabs {
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-tab {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: 8px 0;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
-.shop-item:active {
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(0.98);
+.leaderboard-tab:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.shop-item-icon {
+.leaderboard-tab.active {
+  background: linear-gradient(145deg, #0066cc, #0084ff);
+  box-shadow: 0 0 15px rgba(0, 132, 255, 0.5);
+}
+
+.leaderboard-tab.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  animation: tab-shine 2s infinite;
+}
+
+@keyframes tab-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.search-bar {
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+}
+
+.search-bar input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 8px 15px;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #0084ff;
+  box-shadow: 0 0 10px rgba(0, 132, 255, 0.3);
+}
+
+.search-bar button {
+  background: #0084ff;
+  border: none;
+  border-radius: 15px;
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #ff0033 0%, #0066ff 100%);
-  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
-  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(0, 132, 255, 0.3);
+  transition: all 0.3s ease;
 }
 
-.shop-item-icon i {
-  font-size: 18px;
-  color: white;
+.search-bar button:hover {
+  background: #0066cc;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 132, 255, 0.4);
 }
 
-.energy-icon-small {
-  background: linear-gradient(135deg, #18f2b2 0%, #0bf 100%);
+.search-bar button:active {
+  transform: translateY(0);
+  box-shadow: 0 0 5px rgba(0, 132, 255, 0.3);
 }
 
-.booster-icon {
-  background: linear-gradient(135deg, #ff9500 0%, #ffcc00 100%);
-}
-
-.premium-icon {
-  background: linear-gradient(135deg, #ffcc00 0%, #ff9500 100%);
-}
-
-.special-icon {
-  background: linear-gradient(135deg, #af52de 0%, #5856d6 100%);
-}
-
-.shop-item-info {
+.leaderboard-container {
   flex-grow: 1;
-  margin-right: 10px;
+  overflow-y: auto;
+  padding: 10px;
 }
 
-.shop-item-title {
-  font-size: 14px;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 3px;
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.shop-item-desc {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.shop-item-price {
+.leaderboard-item {
   display: flex;
   align-items: center;
-  color: #ffcc00;
-  font-weight: bold;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.shop-item-price i {
-  margin-right: 5px;
-}
-
-.premium-item::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(255, 204, 0, 0) 0%, rgba(255, 204, 0, 0.1) 50%, rgba(255, 204, 0, 0) 100%);
-  animation: premiumSlide 2s linear infinite;
-}
-
-@keyframes premiumSlide {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.special-item::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(175, 82, 222, 0) 0%, rgba(175, 82, 222, 0.1) 50%, rgba(175, 82, 222, 0) 100%);
-  animation: specialSlide 2s linear infinite;
-}
-
-@keyframes specialSlide {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Головоломка */
-.puzzle-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.difficulty-selector {
-  display: flex;
-  gap: 5px;
-}
-
-.difficulty-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  padding: 5px 10px;
-  border-radius: 10px;
-  color: white;
-  font-size: 12px;
-  transition: all 0.2s;
-}
-
-.difficulty-btn.active {
-  background: #0066ff;
-  box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
-}
-
-.puzzle-reward, .puzzle-timer {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: white;
-  font-size: 14px;
-}
-
-.puzzle-reward i {
-  color: #ffcc00;
-}
-
-.puzzle-timer i {
-  color: #ff9500;
-}
-
-.puzzle-progress-container {
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  margin-bottom: 15px;
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  position: relative;
   overflow: hidden;
 }
 
-.puzzle-progress {
+.leaderboard-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #0066ff, #5856d6);
-  border-radius: 3px;
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.05), 
+    transparent);
+  transform: translateX(-100%);
+  animation: item-shine 3s infinite;
 }
 
-.puzzle-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  padding: 5px;
+@keyframes item-shine {
+  0% { transform: translateX(-100%); }
+  20%, 100% { transform: translateX(100%); }
 }
 
-.puzzle-cell {
-  aspect-ratio: 1/1;
-  border-radius: 10px;
+.leaderboard-rank {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 18px;
+  justify-content: center;
   font-weight: bold;
+  margin-right: 15px;
+}
+
+.rank-1, .rank-2, .rank-3 {
   color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: all 0.2s;
-  transform-origin: center;
+  font-size: 16px;
 }
 
-.puzzle-cell:active {
-  transform: scale(0.95);
+.rank-1 {
+  background: linear-gradient(145deg, #ffd700, #ffa500);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  animation: top-rank-glow 2s infinite alternate;
 }
 
-/* Друзья */
-.friends-list {
-  max-height: 400px;
+@keyframes top-rank-glow {
+  0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+  100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+}
+
+.rank-2 {
+  background: linear-gradient(145deg, #c0c0c0, #a0a0a0);
+  box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+}
+
+.rank-3 {
+  background: linear-gradient(145deg, #cd7f32, #8b4513);
+  box-shadow: 0 0 10px rgba(205, 127, 50, 0.5);
+}
+
+.leaderboard-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #1a2e5a, #4a133f);
+  color: white;
+  overflow: hidden;
+  position: relative;
+}
+
+.leaderboard-avatar.red {
+  background: linear-gradient(145deg, #8a1a1a, #4a0f0f);
+}
+
+.leaderboard-avatar.blue {
+  background: linear-gradient(145deg, #1a2e5a, #0f1e3a);
+}
+
+.leaderboard-avatar.green {
+  background: linear-gradient(145deg, #1a5a2e, #0f3a1e);
+}
+
+.leaderboard-avatar:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%) rotate(45deg);
+  animation: avatar-shine 3s infinite;
+}
+
+@keyframes avatar-shine {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  20%, 100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.leaderboard-info {
+  flex-grow: 1;
+}
+
+.leaderboard-name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.leaderboard-level {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.leaderboard-score {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #ffcc00;
+  text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+.leaderboard-score i {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+/* Стили для модального окна друзей */
+.friends-tabs {
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.friends-tab {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: 8px 0;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.friends-tab:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.friends-tab.active {
+  background: linear-gradient(145deg, #0066cc, #0084ff);
+  box-shadow: 0 0 15px rgba(0, 132, 255, 0.5);
+}
+
+.friends-tab.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  animation: tab-shine 2s infinite;
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff3b30;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 59, 48, 0.7);
+  animation: badge-pulse 1.5s infinite alternate;
+}
+
+.online-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(30, 255, 71, 0.2);
+  color: #1eff47;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1eff47;
+  margin-right: 4px;
+  animation: pulse-dot 1.5s infinite;
+}
+
+.friends-container {
+  flex-grow: 1;
   overflow-y: auto;
+  padding: 10px;
+}
+
+.friends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .friend-item {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.friend-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.friend-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.05), 
+    transparent);
+  transform: translateX(-100%);
+  animation: item-shine 3s infinite;
 }
 
 .friend-avatar {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 15px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: white;
+  justify-content: center;
+  font-size: 24px;
   font-weight: bold;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.friend-avatar.red {
+  background: linear-gradient(145deg, #8a1a1a, #4a0f0f);
+}
+
+.friend-avatar.blue {
+  background: linear-gradient(145deg, #1a2e5a, #0f1e3a);
+}
+
+.friend-online-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1eff47;
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 5px rgba(30, 255, 71, 0.7);
+  animation: online-pulse 1.5s infinite alternate;
+}
+
+@keyframes online-pulse {
+  0% { opacity: 0.7; box-shadow: 0 0 5px rgba(30, 255, 71, 0.7); }
+  100% { opacity: 1; box-shadow: 0 0 10px rgba(30, 255, 71, 1); }
 }
 
 .friend-info {
   flex-grow: 1;
 }
 
-.friend-username {
+.friend-name {
   font-weight: bold;
-  color: white;
-  font-size: 14px;
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
 }
 
-.friend-stats {
+.friend-status {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  opacity: 0.7;
+}
+
+.friend-level {
+  background: rgba(255, 215, 0, 0.2);
+  border-radius: 10px;
+  padding: 2px 6px;
+  color: #ffd700;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+.friend-score {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: #ffcc00;
+}
+
+.friend-score i {
+  font-size: 12px;
+  margin-right: 4px;
 }
 
 .friend-actions {
   display: flex;
-  gap: 5px;
+  gap: 10px;
 }
 
 .friend-action-btn {
   background: rgba(255, 255, 255, 0.1);
   border: none;
-  width: 30px;
-  height: 30px;
   border-radius: 50%;
+  width: 36px;
+  height: 36px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   color: white;
-  font-size: 12px;
-  transition: all 0.2s;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.friend-action-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .friend-action-btn:active {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(0.95);
+  transform: translateY(0);
+  box-shadow: none;
 }
 
-.invite-link {
-  text-align: center;
-  padding: 10px;
+.friend-action-btn.gift {
+  color: #ff9500;
 }
 
-.invite-qr {
-  margin: 20px auto;
-  width: 200px;
-  height: 200px;
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
+.friend-action-btn.gift:hover {
+  box-shadow: 0 0 15px rgba(255, 149, 0, 0.4);
 }
 
-.invite-qr img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.friend-action-btn.message {
+  color: #0084ff;
 }
 
-.copy-link-btn, .share-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  padding: 10px 15px;
-  border-radius: 50px;
-  color: white;
-  font-size: 14px;
-  margin: 5px;
-  transition: all 0.2s;
-  display: inline-flex;
+.friend-action-btn.message:hover {
+  box-shadow: 0 0 15px rgba(0, 132, 255, 0.4);
+}
+
+.friend-action-btn.accept {
+  color: #34c759;
+}
+
+.friend-action-btn.accept:hover {
+  box-shadow: 0 0 15px rgba(52, 199, 89, 0.4);
+}
+
+.friend-action-btn.decline {
+  color: #ff3b30;
+}
+
+.friend-action-btn.decline:hover {
+  box-shadow: 0 0 15px rgba(255, 59, 48, 0.4);
+}
+
+.add-friend-btn {
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 10px;
+  background: linear-gradient(145deg, #0066cc, #0084ff);
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 15px;
+  font-size: 16px;
+  margin: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 132, 255, 0.3);
+  position: relative;
+  overflow: hidden;
 }
 
-.copy-link-btn:active, .share-btn:active {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(0.95);
+.add-friend-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  transform: translateX(-100%);
+  animation: btn-shine 3s infinite;
 }
 
-.invite-note {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  margin-top: 15px;
+@keyframes btn-shine {
+  0% { transform: translateX(-100%); }
+  20%, 100% { transform: translateX(100%); }
 }
 
-/* Задания */
-.tasks-list {
-  max-height: 400px;
+.add-friend-btn:hover {
+  background: linear-gradient(145deg, #0084ff, #00aeff);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(0, 132, 255, 0.5);
+}
+
+.add-friend-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0 10px rgba(0, 132, 255, 0.3);
+}
+
+/* Стили для модального окна заданий */
+.tasks-container {
+  flex-grow: 1;
   overflow-y: auto;
+  padding: 10px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .task-item {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
-  padding: 12px;
-  margin-bottom: 10px;
+  padding: 15px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.task-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.task-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.05), 
+    transparent);
+  transform: translateX(-100%);
+  animation: item-shine 3s infinite;
 }
 
 .task-header {
@@ -970,1748 +2736,1350 @@ button {
 }
 
 .task-icon {
-  width: 30px;
-  height: 30px;
-  background: linear-gradient(135deg, #ff9500 0%, #ffcc00 100%);
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(0, 132, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  margin-right: 15px;
+  font-size: 20px;
+  color: #0084ff;
+  box-shadow: 0 0 10px rgba(0, 132, 255, 0.2);
 }
 
-.task-icon i {
-  color: white;
-  font-size: 14px;
+.task-icon.puzzle {
+  background: rgba(52, 199, 89, 0.2);
+  color: #34c759;
+}
+
+.task-icon.store {
+  background: rgba(255, 149, 0, 0.2);
+  color: #ff9500;
 }
 
 .task-title {
-  flex-grow: 1;
   font-weight: bold;
-  color: white;
-  font-size: 14px;
+  font-size: 16px;
+  flex-grow: 1;
 }
 
 .task-reward {
   display: flex;
   align-items: center;
-  color: #ffcc00;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
+  color: #ffcc00;
 }
 
 .task-reward i {
-  margin-right: 3px;
-  font-size: 12px;
+  margin-right: 5px;
+  font-size: 14px;
 }
 
 .task-progress-container {
-  height: 6px;
+  width: 100%;
+  height: 10px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.task-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #0084ff, #00d2ff);
+  border-radius: 5px;
+  transition: width 0.3s ease;
+  position: relative;
   overflow: hidden;
 }
 
-.task-progress {
+.task-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #ff9500, #ffcc00);
-  border-radius: 3px;
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  animation: progress-shine 2s infinite;
 }
 
-.task-status {
+@keyframes progress-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.task-progress-text {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  opacity: 0.7;
   margin-top: 5px;
 }
 
-.task-claim {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
+.task-completed {
+  position: relative;
 }
 
-.claim-button {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  padding: 8px 15px;
-  border-radius: 50px;
-  color: white;
-  font-size: 12px;
-  transition: all 0.2s;
+.task-completed .task-progress-bar {
+  background: linear-gradient(90deg, #34c759, #00ff9c);
+}
+
+.task-completed-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #34c759;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: completed-pulse 2s infinite alternate;
+}
+
+@keyframes completed-pulse {
+  0% { transform: scale(1); text-shadow: 0 0 5px rgba(52, 199, 89, 0.7); }
+  100% { transform: scale(1.1); text-shadow: 0 0 10px rgba(52, 199, 89, 1); }
+}
+
+/* Стили для модального окна головоломки */
+.puzzle-modal-content {
+  max-width: 500px;
+}
+
+.timer-container {
+  display: flex;
+  align-items: center;
   gap: 5px;
+  margin: 0 15px;
+  background: rgba(255, 59, 48, 0.2);
+  border-radius: 10px;
+  padding: 5px 10px;
 }
 
-.claim-button.active {
-  background: linear-gradient(90deg, #ff9500, #ffcc00);
-  box-shadow: 0 0 10px rgba(255, 149, 0, 0.5);
+.timer-container i {
+  color: #ff3b30;
 }
 
-.claim-button:active {
+#timer {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.puzzle-difficulty {
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.difficulty-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: 8px 0;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.difficulty-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.difficulty-btn.active {
+  background: linear-gradient(145deg, #0066cc, #0084ff);
+  box-shadow: 0 0 15px rgba(0, 132, 255, 0.5);
+}
+
+.difficulty-btn.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  animation: tab-shine 2s infinite;
+}
+
+.puzzle-game-container {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.puzzle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.puzzle-cell {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.puzzle-cell:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.puzzle-cell:active {
   transform: scale(0.95);
 }
 
-.claim-button.disabled {
-  opacity: 0.5;
-  pointer-events: none;
+.puzzle-cell.matched {
+  animation: pulse 0.5s ease-in-out;
+  position: relative;
 }
 
-.task-completed {
-  text-align: center;
-  color: #34c759;
-  font-weight: bold;
-  font-size: 14px;
-  margin-top: 10px;
+.puzzle-cell.matched::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  animation: match-pulse 0.5s ease-in-out;
 }
 
-/* Лидерборд */
-.leaderboard-list {
-  max-height: 400px;
-  overflow-y: auto;
+@keyframes match-pulse {
+  0% { transform: scale(0.9); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: scale(1.1); opacity: 0; }
 }
 
-.leaderboard-item {
+.puzzle-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.puzzle-progress-container {
+  flex-grow: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+.puzzle-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #34c759, #00ff9c);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.puzzle-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  animation: progress-shine 2s infinite;
+}
+
+.puzzle-reward {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.leaderboard-rank {
-  width: 30px;
-  text-align: center;
   font-weight: bold;
-  font-size: 16px;
-  margin-right: 10px;
-}
-
-.rank-1 {
+  font-size: 18px;
   color: #ffcc00;
 }
 
-.rank-2 {
-  color: #c0c0c0;
+.puzzle-reward i {
+  margin-right: 5px;
+  font-size: 14px;
 }
 
-.rank-3 {
-  color: #cd7f32;
+/* ==========================================================================
+   9. Уведомления
+   ========================================================================== */
+#notifications-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  pointer-events: none;
 }
 
+.notification {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 15px;
+  padding: 15px;
+  color: white;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 132, 255, 0.2);
+  transform: translateY(-20px);
+  opacity: 0;
+  animation: notification-appear 0.3s forwards, notification-disappear 0.3s 2.7s forwards;
+  border-left: 3px solid #0084ff;
+}
+
+@keyframes notification-appear {
+  0% { transform: translateY(-20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes notification-disappear {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-20px); opacity: 0; }
+}
+
+.notification-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(0, 132, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  color: #0084ff;
+}
+
+.notification-icon.success {
+  background: rgba(52, 199, 89, 0.2);
+  color: #34c759;
+}
+
+.notification-icon.error {
+  background: rgba(255, 59, 48, 0.2);
+  color: #ff3b30;
+}
+
+.notification-icon.warning {
+  background: rgba(255, 204, 0, 0.2);
+  color: #ffcc00;
+}
+
+.notification-content {
+  flex-grow: 1;
+}
+
+.notification-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.notification-message {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   12. СУПЕР-ИМБА ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ ДЛЯ ИГРЫ В СТИЛЕ 1WIN
+   ========================================================================== */
+
+/* УЛУЧШЕННЫЕ ЭФФЕКТЫ ДЛЯ КНОПКИ ЛИДЕРОВ И РЕЙТИНГА */
+
+/* Супер-крутые стили для таблицы лидеров */
+.leaderboard-list {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%);
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) inset;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.leaderboard-list::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.05) 0%, rgba(0, 0, 0, 0) 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.05) 0%, rgba(0, 0, 0, 0) 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Стиль для строк таблицы лидеров */
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+.leaderboard-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Эффект при наведении на строку таблицы лидеров */
+.leaderboard-item:hover {
+  background: rgba(255, 215, 0, 0.05);
+  transform: translateY(-2px) translateZ(5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.2);
+}
+
+/* Подсветка строки таблицы лидеров */
+.leaderboard-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 215, 0, 0.05), 
+    transparent);
+  transform: translateX(-100%);
+  animation: item-shine 3s infinite;
+  z-index: 0;
+}
+
+/* Анимация подсветки строки таблицы лидеров */
+@keyframes item-shine {
+  0% { transform: translateX(-100%); }
+  20%, 100% { transform: translateX(100%); }
+}
+
+/* Порядковый номер в таблице лидеров */
+.leaderboard-rank {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-right: 15px;
+  font-weight: bold;
+  font-size: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Стили для топ-3 игроков */
+.leaderboard-rank.rank-1 {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #000000;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.leaderboard-rank.rank-2 {
+  background: linear-gradient(135deg, #c0c0c0, #e0e0e0);
+  box-shadow: 0 0 10px rgba(192, 192, 192, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #000000;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.leaderboard-rank.rank-3 {
+  background: linear-gradient(135deg, #cd7f32, #e0955b);
+  box-shadow: 0 0 10px rgba(205, 127, 50, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #000000;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Стиль для имени игрока в таблице лидеров */
+.leaderboard-name {
+  flex-grow: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-right: 10px;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Стиль для счета игрока в таблице лидеров */
+.leaderboard-score {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 5px 10px;
+  border-radius: 10px;
+  min-width: 80px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) inset;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Топ-1 имя выделяется */
+.leaderboard-item:first-child .leaderboard-name {
+  background: linear-gradient(to right, #ffd700, #ffaa00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  text-shadow: none;
+}
+
+/* Топ-1 счет выделяется */
+.leaderboard-item:first-child .leaderboard-score {
+  background: linear-gradient(to right, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.4));
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+/* Аватарка игрока в таблице лидеров */
 .leaderboard-avatar {
   width: 35px;
   height: 35px;
   border-radius: 50%;
   margin-right: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.leaderboard-info {
-  flex-grow: 1;
-}
-
-.leaderboard-username {
-  font-weight: bold;
-  color: white;
-  font-size: 14px;
-}
-
-.leaderboard-score {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.leaderboard-current-user {
-  background: rgba(0, 102, 255, 0.1);
-  border-radius: 10px;
-}
-
-/* Lucky Drive */
-.lucky-drive-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.wheel-container {
-  position: relative;
-  width: 250px;
-  height: 250px;
-  margin-bottom: 20px;
-}
-
-.wheel {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: conic-gradient(
-    #ff3b30 0% 12.5%,
-    #ff9500 12.5% 25%,
-    #ffcc00 25% 37.5%,
-    #34c759 37.5% 50%,
-    #5ac8fa 50% 62.5%,
-    #007aff 62.5% 75%,
-    #5856d6 75% 87.5%,
-    #af52de 87.5% 100%
-  );
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-  transition: transform 3s cubic-bezier(0.19, 1, 0.22, 1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.wheel-segment {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  transform-origin: center;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  pointer-events: none;
-}
-
-.wheel-pointer {
-  position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 30px;
-  background: white;
-  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-  z-index: 1;
-}
-
-.lucky-drive-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.spin-price {
-  display: flex;
-  align-items: center;
-  color: #ffcc00;
-  font-weight: bold;
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.spin-price i {
-  margin-right: 5px;
-}
-
-.spin-button {
-  background: linear-gradient(135deg, #ff9500 0%, #ffcc00 100%);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 50px;
-  color: white;
-  font-size: 16px;
-  margin-bottom: 20px;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  box-shadow: 0 0 10px rgba(255, 149, 0, 0.5);
-}
-
-.spin-button:active {
-  transform: scale(0.95);
-}
-
-.prize-history {
-  width: 100%;
-  text-align: center;
-}
-
-.prize-history h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
-  color: white;
-}
-
-.prize-history-list {
-  max-height: 150px;
-  overflow-y: auto;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 10px;
-}
-
-.prize-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.prize-name {
-  color: white;
-  font-size: 14px;
-}
-
-.prize-amount {
-  color: #ffcc00;
-  font-weight: bold;
-}
-
-/* Telegram команды */
-.telegram-info {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.telegram-qr {
-  margin: 15px auto;
-  width: 150px;
-  height: 150px;
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.telegram-qr img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.telegram-link {
-  font-size: 16px;
-  font-weight: bold;
-  color: #0088cc;
-  margin-bottom: 10px;
-}
-
-.commands-list {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.command-item {
-  display: flex;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.command-name {
-  font-family: monospace;
-  font-weight: bold;
-  color: #5ac8fa;
-  margin-right: 10px;
-  min-width: 120px;
-}
-
-.command-desc {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 14px;
-}
-
-/* ==========================================================================
-   9. Визуальные эффекты
-   ========================================================================== */
-.tap-effect {
-  position: absolute;
-  pointer-events: none;
-  font-weight: bold;
-  transform: translate(-50%, -50%);
-  animation: tapEffect 1s forwards;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-}
-
-@keyframes tapEffect {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) translateY(-40px) scale(1);
-  }
-}
-
-.coin-effect {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  pointer-events: none;
-  animation: coinEffect 1s forwards;
-}
-
-@keyframes coinEffect {
-  0% {
-    opacity: 1;
-    transform: scale(0.8) rotate(0deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-60px) scale(1.2) rotate(360deg);
-  }
-}
-
-.notification {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 10px 15px;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  max-width: 80%;
-  z-index: 2000;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  animation: notificationAppear 0.3s, notificationDisappear 0.3s 2.7s forwards;
-}
-
-@keyframes notificationAppear {
-  from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
-  to { transform: translateX(-50%) translateY(0); opacity: 1; }
-}
-
-@keyframes notificationDisappear {
-  from { transform: translateX(-50%) translateY(0); opacity: 1; }
-  to { transform: translateX(-50%) translateY(-20px); opacity: 0; }
-}
-
-.notification-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.notification-icon.coins {
-  background: linear-gradient(135deg, #ffcc00 0%, #ff9500 100%);
-}
-
-.notification-icon.energy {
-  background: linear-gradient(135deg, #18f2b2 0%, #0bf 100%);
-}
-
-.notification-icon.alert {
-  background: linear-gradient(135deg, #ff3b30 0%, #ff9500 100%);
-}
-
-.notification-icon.success {
-  background: linear-gradient(135deg, #34c759 0%, #18f2b2 100%);
-}
-
-.notification-text {
-  font-size: 14px;
-  flex-grow: 1;
-  text-align: center;
-}
-
-/* Частицы фона */
-.particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.2;
-  animation: floatUp var(--duration) ease-in infinite;
-  animation-delay: var(--delay);
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(100vh) scale(0);
-    opacity: 0;
-  }
-  50% {
-    opacity: var(--opacity);
-  }
-  100% {
-    transform: translateY(-100px) scale(1);
-    opacity: 0;
-  }
-}
-
-/* ==========================================================================
-   10. City Tab Styles - Enhanced RGB
-   ========================================================================== */
-.city-header {
-  text-align: center;
-  margin-bottom: 15px;
-  position: relative;
   overflow: hidden;
-}
-
-.city-header h2 {
-  margin: 0;
-  font-size: 24px;
-  color: white;
-  text-shadow: 0 0 10px rgba(0, 102, 255, 0.7), 0 0 20px rgba(255, 0, 0, 0.7);
   position: relative;
   z-index: 2;
-  animation: text-flicker 3s infinite alternate;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: #1a1a2e;
 }
 
-@keyframes text-flicker {
-  0%, 100% { text-shadow: 0 0 10px rgba(0, 102, 255, 0.7), 0 0 20px rgba(255, 0, 0, 0.7); }
-  50% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 25px rgba(0, 102, 255, 0.8); }
-}
-
-.city-header p {
-  margin: 5px 0 0;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-  position: relative;
-  z-index: 2;
-}
-
-.city-content {
-  overflow-y: auto;
-  max-height: calc(100vh - 200px);
-  padding: 15px;
-  position: relative;
-}
-
-.city-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.city-background-grid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
-  z-index: 1;
-  animation: grid-move 60s linear infinite;
-}
-
-@keyframes grid-move {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(20px, 20px); }
-}
-
-.city-background-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
-  z-index: 2;
-}
-
-/* RGB Border animation */
-.rgb-border {
-  position: relative;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 15px;
-  padding: 15px;
-  margin-bottom: 15px;
-  z-index: 1;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-.rgb-border::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  border-radius: 17px;
-  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-  background-size: 400%;
-  z-index: -1;
-  animation: rgb-border-animation 20s linear infinite;
-}
-
-@keyframes rgb-border-animation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* RGB Text Effect */
-.rgb-text {
-  color: white;
-  position: relative;
-  display: inline-block;
-  animation: rgb-text-animation 5s linear infinite;
-}
-
-@keyframes rgb-text-animation {
-  0% { color: #ff0000; }
-  16.6% { color: #ff8800; }
-  33.3% { color: #ffff00; }
-  50% { color: #00ff00; }
-  66.6% { color: #00ffff; }
-  83.3% { color: #0000ff; }
-  100% { color: #ff0000; }
-}
-
-/* RGB Glow and Pulse Effect */
-.rgb-glow {
-  animation: rgb-glow-animation 3s ease-in-out infinite alternate;
-}
-
-@keyframes rgb-glow-animation {
-  0% { text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000; }
-  33% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
-  66% { text-shadow: 0 0 5px #0000ff, 0 0 10px #0000ff; }
-  100% { text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000; }
-}
-
-.rgb-pulse {
-  animation: rgb-pulse-animation 2s ease-in-out infinite;
-}
-
-@keyframes rgb-pulse-animation {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.1); }
-}
-
-/* RGB Gradient */
-.rgb-gradient {
-  background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
-  background-size: 600% 600%;
-  animation: rgb-gradient-animation 10s ease infinite;
-}
-
-@keyframes rgb-gradient-animation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* RGB Button */
-.rgb-button {
-  position: relative;
-  background: rgba(0, 0, 0, 0.3);
-  border: none;
-  border-radius: 50px;
-  padding: 0;
-  color: white;
-  font-size: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  z-index: 1;
-  transition: all 0.3s;
-}
-
-.rgb-button .btn-content {
-  position: relative;
-  z-index: 2;
-  padding: 10px 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-.rgb-button .btn-glow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-  background-size: 400%;
-  opacity: 0.7;
-  z-index: 1;
-  animation: rgb-button-animation 20s linear infinite;
-}
-
-@keyframes rgb-button-animation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.rgb-button:active {
-  transform: scale(0.95);
-}
-
-.rgb-button[disabled] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.rgb-button[disabled] .btn-glow {
-  opacity: 0.2;
-}
-
-/* City Info Styles */
-.city-info {
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 2;
-}
-
-.city-level {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.city-level i {
-  font-size: 28px;
-  color: white;
-  margin-right: 15px;
-}
-
-.level-info {
-  flex-grow: 1;
-}
-
-.city-level-title {
-  font-weight: bold;
-  font-size: 18px;
-  color: white;
-  margin-bottom: 8px;
-}
-
-.city-progress-bar {
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) inset;
-}
-
-.city-progress {
-  height: 100%;
-  border-radius: 4px;
-  position: relative;
-}
-
-.city-progress::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 75%);
-  background-size: 200% 100%;
-  animation: progress-shine 2s linear infinite;
-}
-
-@keyframes progress-shine {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.city-exp-text {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  text-align: right;
-}
-
-.city-income {
-  display: flex;
-  align-items: center;
-  color: #ffcc00;
-  font-size: 16px;
-  margin-bottom: 15px;
-}
-
-.city-income i {
-  margin-right: 10px;
-  font-size: 18px;
-}
-
-.collect-all-btn {
-  width: 100%;
-}
-
-/* City Stats */
-.city-stats {
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 2;
-}
-
-.stats-title {
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 15px;
-  color: white;
-  text-shadow: 0 0 10px rgba(0, 102, 255, 0.7);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
-.stat-box {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-box::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(transparent, rgba(255, 255, 255, 0.1), transparent);
-  transform: rotate(45deg);
-  animation: stats-shine 3s linear infinite;
-}
-
-@keyframes stats-shine {
-  0% { transform: translateX(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) rotate(45deg); }
-}
-
-.stat-box i {
-  font-size: 20px;
-  margin-bottom: 5px;
-  display: block;
-}
-
-.stat-value {
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 3px;
-}
-
-.stat-label {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* Buildings Container */
-.buildings-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 2;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.section-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.section-subtitle {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.building-item {
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s;
-}
-
-.building-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-}
-
-.building-item.locked {
-  opacity: 0.7;
-}
-
-.building-header {
-  display: flex;
-  align-items: center;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 10px;
-}
-
-.building-icon {
-  width: 45px;
-  height: 45px;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.3) 100%);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  position: relative;
-  overflow: hidden;
-}
-
-.building-icon::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: conic-gradient(from var(--building-hue), hsl(var(--building-hue), 100%, 50%), hsl(calc(var(--building-hue) + 90deg), 100%, 50%), hsl(calc(var(--building-hue) + 180deg), 100%, 50%), hsl(calc(var(--building-hue) + 270deg), 100%, 50%), hsl(var(--building-hue), 100%, 50%));
-  z-index: -1;
-  animation: rotate 3s linear infinite;
-  opacity: 0.7;
-}
-
-@keyframes rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.building-icon i {
-  font-size: 22px;
-  color: white;
-  position: relative;
-  z-index: 1;
-}
-
-.building-info {
-  flex-grow: 1;
-}
-
-.building-title {
-  font-weight: bold;
-  font-size: 16px;
-  color: white;
-  margin-bottom: 3px;
-}
-
-.building-level {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.building-details {
-  margin-bottom: 15px;
-}
-
-.building-income {
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.income-value {
-  display: flex;
-  align-items: center;
-  color: #ffcc00;
-  font-weight: bold;
-}
-
-.income-value i {
-  margin-right: 5px;
-  font-size: 14px;
-}
-
-.not-built {
-  color: rgba(255, 255, 255, 0.5);
-  font-style: italic;
-}
-
-.building-description {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 10px;
-  line-height: 1.4;
-}
-
-.efficiency-bar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.efficiency-label {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-right: 10px;
-  width: 95px;
-}
-
-.efficiency-meter {
-  display: flex;
-  gap: 5px;
-  flex-grow: 1;
-}
-
-.efficiency-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  transition: all 0.3s;
-}
-
-.efficiency-dot.active {
-  background: linear-gradient(to right, #ff0000, #00ff00, #0000ff);
-  background-size: 200% 200%;
-  animation: gradient-dot 2s linear infinite;
-  animation-delay: var(--dot-delay);
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-}
-
-@keyframes gradient-dot {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.building-upgrade {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.upgrade-price {
-  display: flex;
-  align-items: center;
-  color: #ffcc00;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.upgrade-price.cannot-afford {
-  color: #ff3b30;
-}
-
-.upgrade-price i {
-  margin-right: 5px;
-}
-
-.locked-message {
-  display: flex;
-  align-items: center;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 14px;
-  padding: 5px 10px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  width: 100%;
-  justify-content: center;
-}
-
-.locked-message i {
-  margin-right: 8px;
-  font-size: 16px;
-}
-
-/* Special Upgrades */
-.city-upgrades {
-  position: relative;
-  z-index: 2;
-}
-
-.special-upgrades-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.special-upgrade {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-}
-
-.special-upgrade-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.3) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  position: relative;
-}
-
-.special-upgrade-icon::before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-  border-radius: 50%;
-  z-index: -1;
-  background-size: 400%;
-  animation: rgb-border-animation 20s linear infinite;
-}
-
-.special-upgrade-icon i {
-  font-size: 24px;
-  color: white;
-}
-
-.special-upgrade-info {
-  flex-grow: 1;
-  margin-right: 15px;
-}
-
-.special-upgrade-name {
-  font-weight: bold;
-  font-size: 16px;
-  color: white;
-  margin-bottom: 5px;
-}
-
-.special-upgrade-description {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.special-upgrade-action {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 5px;
-}
-
-.special-upgrade.locked {
-  opacity: 0.7;
-}
-
-/* ==========================================================================
-   11. Minigames Tab Styles
-   ========================================================================== */
-.minigames-header {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.minigames-header h2 {
-  margin: 0;
-  font-size: 20px;
-  color: white;
-  text-shadow: 0 0 10px rgba(255, 149, 0, 0.7);
-}
-
-.minigames-header p {
-  margin: 5px 0 0;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.minigames-container {
-  overflow-y: auto;
-  max-height: calc(100vh - 200px);
-  padding: 10px;
-}
-
-.minigames-stats {
-  display: flex;
-  justify-content: space-around;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  padding: 12px;
-  margin-bottom: 15px;
-}
-
-.minigame-item {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.minigame-item.locked {
-  opacity: 0.6;
-}
-
-.minigame-icon {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, #ff9500 0%, #ffcc00 100%);
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
-  flex-shrink: 0;
-}
-
-.minigame-icon i {
-  font-size: 24px;
-  color: white;
-}
-
-.minigame-info {
-  flex-grow: 1;
-}
-
-.minigame-info h3 {
-  margin: 0 0 5px;
-  font-size: 16px;
-  color: white;
-}
-
-.minigame-info p {
-  margin: 0 0 8px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.last-played {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.minigame-action {
-  margin-left: 10px;
-}
-
-.play-game-btn {
-  background: linear-gradient(135deg, #ff9500 0%, #ffcc00 100%);
-  border: none;
-  padding: 8px 15px;
-  border-radius: 50px;
-  color: white;
-  font-size: 14px;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.play-game-btn:active {
-  transform: scale(0.95);
-}
-
-/* Sea Battle Game */
-.sea-battle-content {
-  max-width: 95%;
-  width: 450px;
-}
-
-.battle-arena {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.player-info, .enemy-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.player-avatar, .enemy-avatar {
-  width: 80px;
-  height: 80px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-  margin-bottom: 10px;
-  overflow: hidden;
-  border: 2px solid #0084ff;
-  box-shadow: 0 0 10px rgba(0, 132, 255, 0.5);
-}
-
-.enemy-avatar {
-  border-color: #ff3b30;
-  box-shadow: 0 0 10px rgba(255, 59, 48, 0.5);
-}
-
-.player-avatar img, .enemy-avatar img {
+.leaderboard-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.player-stats, .enemy-stats {
-  width: 100%;
+/* Подсветка текущего игрока в таблице лидеров */
+.leaderboard-item.current-user {
+  background: rgba(0, 132, 255, 0.1);
+  border: 1px solid rgba(0, 132, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 132, 255, 0.2);
 }
 
-.enemy-name {
-  font-weight: bold;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  margin-bottom: 5px;
-}
-
-.health-bar {
-  margin-bottom: 5px;
-}
-
-.health-label {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 3px;
-}
-
-.health-bar-container {
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 3px;
-}
-
-.health-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #ff3b30, #ff9500);
-  transition: width 0.3s ease;
-}
-
-.health-value {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.6);
-  text-align: right;
-}
-
-.attack-power {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.battle-vs {
-  display: flex;
-  align-items: center;
-  margin: 0 10px;
-  font-weight: bold;
-  font-size: 18px;
-  color: #ff9500;
-}
-
-.battle-actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.battle-btn {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  padding: 10px;
-  border-radius: 10px;
-  color: white;
-  font-size: 14px;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-.battle-btn:not([disabled]):active {
-  transform: scale(0.95);
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.battle-btn[disabled] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.battle-btn i {
-  font-size: 18px;
-}
-
-.battle-log {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 10px;
-  height: 150px;
-  overflow-y: auto;
-  font-size: 14px;
-}
-
-.log-entry {
-  margin-bottom: 8px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.player-action {
+.leaderboard-item.current-user .leaderboard-name {
   color: #0084ff;
-}
-
-.player-special {
-  color: #af52de;
   font-weight: bold;
 }
 
-.player-heal {
-  color: #34c759;
+.leaderboard-item.current-user .leaderboard-avatar {
+  border-color: rgba(0, 132, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 132, 255, 0.5);
 }
 
-.enemy-action {
-  color: #ff3b30;
-}
-
-.victory {
-  color: #ffcc00;
-  text-align: center;
-}
-
-.victory h3, .defeat h3 {
-  margin: 5px 0;
-  font-size: 20px;
-}
-
-.defeat {
-  color: #ff3b30;
-  text-align: center;
-}
-
-/* Fishing Game */
-.fishing-content {
-  max-width: 95%;
-  width: 450px;
-}
-
-.fishing-area {
+/* Анимация для таблицы лидеров при загрузке данных */
+.leaderboard-loading {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
   flex-direction: column;
-  margin-bottom: 15px;
 }
 
-.fishing-scene {
-  height: 250px;
-  background: linear-gradient(to bottom, #0a1535 0%, #03070e 100%);
-  border-radius: 15px;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.water-surface {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 30px;
-  background: linear-gradient(to bottom, rgba(0, 132, 255, 0.8) 0%, rgba(0, 132, 255, 0.1) 100%);
-  z-index: 2;
-}
-
-.fish-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.fishing-hook {
-  position: absolute;
-  top: 30px;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background: #ffffff;
+.leaderboard-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 215, 0, 0.3);
   border-radius: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  display: none;
+  border-top-color: #ffd700;
+  animation: leaderboard-spin 1s linear infinite;
+  margin-bottom: 15px;
 }
 
-.fish {
-  position: absolute;
+@keyframes leaderboard-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.leaderboard-loading-text {
+  color: rgba(255, 255, 255, 0.7);
   font-size: 14px;
-  transform-origin: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Улучшенные вкладки для таблицы лидеров */
+.leaderboard-tabs {
+  display: flex;
+  margin-bottom: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 5px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-tab {
+  flex: 1;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.leaderboard-tab.active {
+  background: rgba(255, 215, 0, 0.15);
+  color: #ffffff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Эффект свечения активной вкладки */
+.leaderboard-tab.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, 
+    rgba(255, 215, 0, 0.2), 
+    rgba(255, 165, 0, 0.1), 
+    rgba(255, 215, 0, 0.2));
+  z-index: -1;
+  opacity: 0.7;
+  animation: tab-glow 3s infinite alternate;
+}
+
+@keyframes tab-glow {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+/* Улучшенный скроллбар для таблицы лидеров */
+.leaderboard-container {
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 215, 0, 0.2) rgba(0, 0, 0, 0.3);
+  padding: 5px;
+}
+
+.leaderboard-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.leaderboard-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+}
+
+.leaderboard-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.2);
+  border-radius: 3px;
+}
+
+.leaderboard-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.4);
+}
+
+/* УЛУЧШЕННЫЕ ЭФФЕКТЫ ДЛЯ КНОПКИ ДРУЗЕЙ И СПИСКА ДРУЗЕЙ */
+
+/* Улучшенные стили для списка друзей */
+.friends-list {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%);
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) inset;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(0, 132, 255, 0.1);
+}
+
+.friends-list::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(0, 132, 255, 0.05) 0%, rgba(0, 0, 0, 0) 50%),
+    radial-gradient(circle at 80% 70%, rgba(0, 132, 255, 0.05) 0%, rgba(0, 0, 0, 0) 50%);
+  pointer-events: none;
   z-index: 1;
 }
 
-.common-fish {
-  color: #ffffff;
-}
-
-.uncommon-fish {
-  color: #0084ff;
-  font-size: 16px;
-  text-shadow: 0 0 5px rgba(0, 132, 255, 0.7);
-}
-
-.rare-fish {
-  color: #af52de;
-  font-size: 18px;
-  text-shadow: 0 0 8px rgba(175, 82, 222, 0.8);
-}
-
-.epic-fish {
-  color: #ffcc00;
-  font-size: 20px;
-  text-shadow: 0 0 10px rgba(255, 204, 0, 0.9);
-}
-
-@keyframes fishSwim {
-  0% { transform: translateX(0) scaleX(1); }
-  45% { transform: translateX(100px) scaleX(1); }
-  50% { transform: translateX(100px) scaleX(-1); }
-  95% { transform: translateX(0) scaleX(-1); }
-  100% { transform: translateX(0) scaleX(1); }
-}
-
-.fishing-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.depth-meter {
+/* Стиль для карточки друга */
+.friend-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.depth-label {
-  font-size: 14px;
-  color: white;
-  min-width: 100px;
-}
-
-.depth-bar-container {
-  flex-grow: 1;
-  height: 150px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
   position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
 }
 
-.depth-bar {
+.friend-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Эффект при наведении на карточку друга */
+.friend-item:hover {
+  background: rgba(0, 132, 255, 0.05);
+  transform: translateY(-2px) translateZ(5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 132, 255, 0.2);
+}
+
+/* Подсветка карточки друга */
+.friend-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(0, 132, 255, 0.05), 
+    transparent);
+  transform: translateX(-100%);
+  animation: friend-shine 3s infinite;
+  z-index: 0;
+}
+
+/* Анимация подсветки карточки друга */
+@keyframes friend-shine {
+  0% { transform: translateX(-100%); }
+  20%, 100% { transform: translateX(100%); }
+}
+
+/* Аватарка друга */
+.friend-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: #1a1a2e;
+}
+
+.friend-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Информация о друге */
+.friend-info {
+  flex-grow: 1;
+  position: relative;
+  z-index: 2;
+  margin-right: 10px;
+}
+
+.friend-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.friend-status {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Индикатор онлайн-статуса друга */
+.friend-online-indicator {
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(to top, #0084ff, #32ade6);
-  border-radius: 5px;
-  transition: height 0.1s linear;
-}
-
-.fishing-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  padding: 10px;
-  border-radius: 10px;
-  color: white;
-  font-size: 14px;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-.fishing-btn:not([disabled]):active {
-  transform: scale(0.95);
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.fishing-btn[disabled] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.fishing-stats {
-  display: flex;
-  justify-content: space-around;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.fishing-log {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 10px;
-  height: 120px;
-  overflow-y: auto;
-  font-size: 14px;
-}
-
-.text-blue {
-  color: #0084ff;
-}
-
-.text-purple {
-  color: #af52de;
-}
-
-.text-orange {
-  color: #ffcc00;
-  font-weight: bold;
-}
-
-/* Racing Game */
-.racing-content {
-  max-width: 95%;
-  width: 450px;
-}
-
-.racing-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.menu-section {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
-  padding: 15px;
-}
-
-.menu-section h3 {
-  margin: 0 0 10px;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-}
-
-.tracks-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.track-item {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.track-item:active {
-  transform: scale(0.98);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.track-name {
-  font-weight: bold;
-  font-size: 14px;
-  color: white;
-  margin-bottom: 3px;
-}
-
-.track-difficulty, .track-reward {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.upgrade-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.upgrade-item {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 10px;
-}
-
-.upgrade-name {
-  font-weight: bold;
-  font-size: 14px;
-  color: white;
-  min-width: 100px;
-}
-
-.upgrade-level {
-  flex-grow: 1;
-  padding: 0 10px;
-}
-
-.upgrade-progress {
-  display: flex;
-  gap: 5px;
-}
-
-.upgrade-dot {
+  right: 0;
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  transition: all 0.2s;
+  background: #4cd964;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(76, 217, 100, 0.6);
+  z-index: 3;
+  animation: friend-online-pulse 2s infinite;
 }
 
-.upgrade-dot.active {
-  background: #ff9500;
-  box-shadow: 0 0 5px rgba(255, 149, 0, 0.7);
+@keyframes friend-online-pulse {
+  0% { box-shadow: 0 0 8px rgba(76, 217, 100, 0.6); }
+  50% { box-shadow: 0 0 15px rgba(76, 217, 100, 0.9); }
+  100% { box-shadow: 0 0 8px rgba(76, 217, 100, 0.6); }
 }
 
-.content-tab {
-  display: none;
-  height: calc(100% - 140px);  /* Adjust for header and bottom nav */
+/* Индикатор оффлайн-статуса друга */
+.friend-offline-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #8e8e93;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  z-index: 3;
+}
+
+/* Время последней активности */
+.friend-last-active {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+}
+
+/* Кнопки действий для друга */
+.friend-actions {
+  display: flex;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.friend-action-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+.friend-action-btn:hover {
+  background: rgba(0, 132, 255, 0.2);
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 132, 255, 0.3);
+}
+
+.friend-action-btn.gift {
+  background: rgba(255, 59, 48, 0.2);
+}
+
+.friend-action-btn.gift:hover {
+  background: rgba(255, 59, 48, 0.3);
+  box-shadow: 0 0 10px rgba(255, 59, 48, 0.3);
+}
+
+/* Улучшенные вкладки для друзей */
+.friends-tabs {
+  display: flex;
+  margin-bottom: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 5px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.friends-tab {
+  flex: 1;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.friends-tab.active {
+  background: rgba(0, 132, 255, 0.15);
+  color: #ffffff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Эффект свечения активной вкладки друзей */
+.friends-tab.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, 
+    rgba(0, 132, 255, 0.2), 
+    rgba(0, 210, 255, 0.1), 
+    rgba(0, 132, 255, 0.2));
+  z-index: -1;
+  opacity: 0.7;
+  animation: friend-tab-glow 3s infinite alternate;
+}
+
+@keyframes friend-tab-glow {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+/* Подсветка активной вкладки друзей */
+.friends-tab.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(0, 132, 255, 0.2), 
+    transparent);
+  transform: translateX(-100%);
+  animation: friend-tab-shine 3s infinite;
+  z-index: 0;
+}
+
+@keyframes friend-tab-shine {
+  0% { transform: translateX(-100%); }
+  20%, 100% { transform: translateX(100%); }
+}
+
+/* Кнопка добавления друга */
+.add-friend-btn {
+  background: linear-gradient(135deg, rgba(0, 132, 255, 0.15), rgba(0, 210, 255, 0.25));
+  border: 1px solid rgba(0, 132, 255, 0.3);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.add-friend-btn i {
+  font-size: 16px;
+}
+
+.add-friend-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 132, 255, 0.25), rgba(0, 210, 255, 0.35));
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 132, 255, 0.2);
+}
+
+.add-friend-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Эффект блика на кнопке добавления друга */
+.add-friend-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  transform: skewX(-25deg);
+  animation: add-friend-shine 3s infinite;
+}
+
+@keyframes add-friend-shine {
+  0% { left: -100%; }
+  20%, 100% { left: 200%; }
+}
+
+/* Улучшенный скроллбар для списка друзей */
+.friends-container {
+  max-height: 400px;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 132, 255, 0.2) rgba(0, 0, 0, 0.3);
+  padding: 5px;
 }
 
-/* ==========================================================================
-   12. Media Queries
-   ========================================================================== */
-@media (max-height: 700px) {
-  #kraken {
-    max-width: 250px;
+.friends-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.friends-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+}
+
+.friends-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 132, 255, 0.2);
+  border-radius: 3px;
+}
+
+.friends-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 132, 255, 0.4);
+}
+
+/* Значок количества запросов в друзья */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff3b30, #ff9500);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  padding: 0 5px;
+  margin-left: 5px;
+  box-shadow: 0 0 8px rgba(255, 59, 48, 0.5);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  animation: badge-pulse 2s infinite alternate;
+}
+
+@keyframes badge-pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); box-shadow: 0 0 12px rgba(255, 59, 48, 0.7); }
+}
+
+/* Значок онлайн в заголовке модального окна друзей */
+.online-badge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(76, 217, 100, 0.15), rgba(76, 217, 100, 0.25));
+  border: 1px solid rgba(76, 217, 100, 0.3);
+  color: #ffffff;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  margin-left: 10px;
+  box-shadow: 0 0 10px rgba(76, 217, 100, 0.2);
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #4cd964;
+  border-radius: 50%;
+  margin-right: 5px;
+  animation: online-dot-pulse 1.5s infinite;
+  box-shadow: 0 0 8px rgba(76, 217, 100, 0.6);
+}
+
+@keyframes online-dot-pulse {
+  0% { opacity: 0.5; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Улучшенная строка поиска */
+.search-bar {
+  display: flex;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.search-bar input {
+  flex-grow: 1;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 12px 15px;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2) inset;
+}
+
+.search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-bar input:focus {
+  border-color: rgba(0, 132, 255, 0.5);
+  box-shadow: 0 0 15px rgba(0, 132, 255, 0.1);
+}
+
+.search-bar button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 132, 255, 0.2);
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-bar button:hover {
+  background: rgba(0, 132, 255, 0.4);
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 132, 255, 0.3);
+}
+
+/* УЛЬТРА-ИМБА ЭФФЕКТЫ НАЖАТИЯ НА ВСЕ ЭЛЕМЕНТЫ ИНТЕРФЕЙСА */
+
+/* Волновой эффект при нажатии на интерактивные элементы */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-animation 0.8s ease-out forwards;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
   }
-  
-  .energy-container {
-    padding: 5px 15px;
-  }
-  
-  .top-bar {
-    padding: 5px 15px;
-  }
-  
+}
+
+/* Нажатие на кнопки в стиле Material Design */
+.material-button {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.material-button:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.5s, opacity 1s;
+}
+
+.material-button:active:after {
+  transform: scale(0, 0);
+  opacity: 0.3;
+  transition: 0s;
+}
+
+/* ЭФФЕКТЫ ДЛЯ ВАЖНЫХ ИГРОВЫХ ЭЛЕМЕНТОВ */
+
+/* Улучшенная анимация для подсчета очков */
+@keyframes score-bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+/* Улучшенные эффекты для уведомлений */
+.notification.success {
+  background: linear-gradient(135deg, rgba(76, 217, 100, 0.15), rgba(76, 217, 100, 0.25));
+  border-left: 4px solid #4cd964;
+}
+
+.notification.error {
+  background: linear-gradient(135deg, rgba(255, 59, 48, 0.15), rgba(255, 59, 48, 0.25));
+  border-left: 4px solid #ff3b30;
+}
+
+.notification.info {
+  background: linear-gradient(135deg, rgba(0, 132, 255, 0.15), rgba(0, 132, 255, 0.25));
+  border-left: 4px solid #0084ff;
+}
+
+.notification.warning {
+  background: linear-gradient(135deg, rgba(255, 204, 0, 0.15), rgba(255, 204, 0, 0.25));
+  border-left: 4px solid #ffcc00;
+}
+
+/* Улучшенная иконка уведомления */
+.notification-icon {
+  font-size: 20px;
+  margin-right: 10px;
+  position: relative;
+}
+
+.notification.success .notification-icon {
+  color: #4cd964;
+  animation: notification-success-icon 1s ease-in-out;
+}
+
+.notification.error .notification-icon {
+  color: #ff3b30;
+  animation: notification-error-icon 1s ease-in-out;
+}
+
+.notification.info .notification-icon {
+  color: #0084ff;
+  animation: notification-info-icon 1s ease-in-out;
+}
+
+.notification.warning .notification-icon {
+  color: #ffcc00;
+  animation: notification-warning-icon 1s ease-in-out;
+}
+
+@keyframes notification-success-icon {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+@keyframes notification-error-icon {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.2) rotate(-15deg); }
+  50% { transform: scale(1.2) rotate(15deg); }
+  75% { transform: scale(1.2) rotate(-15deg); }
+}
+
+@keyframes notification-info-icon {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-5px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(5px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes notification-warning-icon {
+  0%, 100% { transform: scale(1); }
+  10%, 30%, 50%, 70%, 90% { transform: scale(1.2); }
+  20%, 40%, 60%, 80% { transform: scale(1); }
+}
+
+/* Улучшенная анимация появления уведомления */
+@keyframes notification-slide-in {
+  0% { transform: translateX(150%); opacity: 0; }
+  60% { transform: translateX(-10%); }
+  80% { transform: translateX(5%); }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Улучшенная анимация исчезновения уведомления */
+@keyframes notification-slide-out {
+  0% { transform: translateX(0); opacity: 1; }
+  20% { transform: translateX(5%); }
+  40% { transform: translateX(-10%); }
+  100% { transform: translateX(150%); opacity: 0; }
+}
+
+/* Улучшенная полоса прогресса уведомления */
+.notification-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  width: 100%;
+  animation: notification-progress-shrink 5s linear forwards;
+  transform-origin: left;
+}
+
+@keyframes notification-progress-shrink {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+/* МЕДИА-ЗАПРОСЫ ДЛЯ АДАПТИВНОСТИ */
+
+/* Для мобильных устройств */
+@media (max-width: 480px) {
   .menu-button {
+    width: 60px;
+    height: 60px;
     padding: 8px 0;
   }
   
@@ -2719,7 +4087,914 @@ button {
     font-size: 18px;
   }
   
-  .bottom-nav {
-    padding: 5px 0;
+  .menu-button span {
+    font-size: 9px;
   }
+  
+  #leaderboard-btn i {
+    font-size: 20px;
+  }
+  
+  #friends-btn i {
+    font-size: 20px;
+  }
+  
+  .stats-container {
+    gap: 8px;
+  }
+  
+  .stat-item {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .side-menu {
+    width: 70px;
+    padding: 10px 0;
+    gap: 10px;
+  }
+  
+  #kraken {
+    max-width: 250px;
+  }
+  
+  .leaderboard-item {
+    padding: 10px;
+  }
+  
+  .leaderboard-rank {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+    margin-right: 10px;
+  }
+  
+  .leaderboard-name {
+    font-size: 12px;
+  }
+  
+  .leaderboard-score {
+    font-size: 12px;
+    min-width: 60px;
+    padding: 4px 8px;
+  }
+  
+  .leaderboard-avatar {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .friend-item {
+    padding: 10px;
+  }
+  
+  .friend-avatar {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .friend-name {
+    font-size: 12px;
+  }
+  
+  .friend-status {
+    font-size: 10px;
+  }
+  
+  .modal-content {
+    width: 95%;
+  }
+  
+  .modal-header h2 {
+    font-size: 18px;
+  }
+  
+  .search-bar input {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  
+  .search-bar button {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* Для средних экранов */
+@media (min-width: 481px) and (max-width: 768px) {
+  .menu-button {
+    width: 65px;
+    height: 65px;
+  }
+  
+  .stat-item {
+    padding: 5px 10px;
+  }
+  
+  .side-menu {
+    width: 75px;
+  }
+  
+  #kraken {
+    max-width: 280px;
+  }
+}
+
+/* Для больших экранов */
+@media (min-width: 769px) {
+  .menu-button:hover {
+    transform: translateY(-7px);
+  }
+  
+  #kraken {
+    max-width: 300px;
+  }
+  
+  .modal-content {
+    max-width: 550px;
+  }
+}
+
+/* ==========================================================================
+   13. УЛЬТРА-МЕГА-СУПЕР-КРУТЫЕ ЭФФЕКТЫ ДЛЯ ВСЕЙ ИГРЫ В СТИЛЕ 1WIN
+   ========================================================================== */
+
+/* УЛУЧШЕННЫЕ ЭФФЕКТЫ ДЛЯ ИГРОВЫХ МЕХАНИК И АНИМАЦИЙ */
+
+/* Эффект бустера скорости кликов */
+.boost-active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.boost-active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, 
+    rgba(76, 217, 100, 0.1) 0%, 
+    rgba(76, 217, 100, 0) 70%);
+  animation: boost-pulse 2s infinite alternate;
+}
+
+@keyframes boost-pulse {
+  0% { opacity: 0.3; transform: scale(0.95); }
+  100% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.boost-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: rgba(76, 217, 100, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4cd964;
+  box-shadow: 0 0 15px rgba(76, 217, 100, 0.5);
+  z-index: 1000;
+  animation: boost-icon-pulse 1s infinite alternate;
+  border: 2px solid rgba(76, 217, 100, 0.5);
+}
+
+@keyframes boost-icon-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 15px rgba(76, 217, 100, 0.5); }
+  100% { transform: scale(1.1); box-shadow: 0 0 25px rgba(76, 217, 100, 0.8); }
+}
+
+.boost-timer {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+/* Эффект двойных монет */
+.double-coins-active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.double-coins-active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, 
+    rgba(255, 204, 0, 0.1) 0%, 
+    rgba(255, 204, 0, 0) 70%);
+  animation: coins-pulse 2s infinite alternate;
+}
+
+@keyframes coins-pulse {
+  0% { opacity: 0.3; transform: scale(0.95); }
+  100% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.double-coins-icon {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 204, 0, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffcc00;
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+  z-index: 1000;
+  animation: coins-icon-pulse 1s infinite alternate;
+  border: 2px solid rgba(255, 204, 0, 0.5);
+}
+
+@keyframes coins-icon-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 204, 0, 0.5); }
+  100% { transform: scale(1.1); box-shadow: 0 0 25px rgba(255, 204, 0, 0.8); }
+}
+
+/* Супер-эффект уровня */
+.level-up-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(0, 0, 0, 0) 70%);
+  z-index: 2000;
+  pointer-events: none;
+  animation: level-pulse 2s forwards;
+}
+
+@keyframes level-pulse {
+  0% { opacity: 0; transform: scale(0.8); }
+  20% { opacity: 0.8; transform: scale(1.1); }
+  80% { opacity: 0.8; transform: scale(1.1); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+
+.level-up-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+  white-space: nowrap;
+  animation: level-text 2s forwards;
+}
+
+@keyframes level-text {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+  20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+  80% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+.level-up-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.level-star {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD700"><path d="M12 1l3.09 6.32L22 8.5l-5 4.87 1.18 6.88L12 17l-6.18 3.25L7 13.37 2 8.5l6.91-1.18L12 1z"/></svg>');
+  background-size: contain;
+  opacity: 0;
+  animation: level-star 2s forwards;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+}
+
+@keyframes level-star {
+  0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+/* Улучшения для счета и монет */
+.score-bounce {
+  animation: score-bounce-anim 0.5s;
+}
+
+@keyframes score-bounce-anim {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); color: #ffcc00; text-shadow: 0 0 15px rgba(255, 204, 0, 0.8); }
+  100% { transform: scale(1); }
+}
+
+/* СУПЕР-ИМБА ЭФФЕКТЫ ДЛЯ РАЗЛИЧНЫХ ЭЛЕМЕНТОВ ИНТЕРФЕЙСА */
+
+/* Виртуальная клавиатура для мобильных устройств */
+.virtual-keyboard {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 2000;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.virtual-keyboard.active {
+  transform: translateY(0);
+}
+
+.virtual-key {
+  width: 32px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.virtual-key:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.virtual-key:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.virtual-key.space {
+  width: 120px;
+}
+
+.virtual-key.shift, .virtual-key.backspace {
+  width: 50px;
+}
+
+.virtual-key.enter {
+  width: 60px;
+}
+
+/* Улучшенная анимация для загрузки данных */
+.data-loading {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.data-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 132, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #0084ff;
+  animation: data-spin 1s linear infinite;
+}
+
+@keyframes data-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.data-spinner::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 132, 255, 0.2);
+  animation: data-pulse 1.5s ease infinite;
+}
+
+@keyframes data-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+/* Улучшенный эффект при переключении между экранами */
+.screen-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.screen-transition.active {
+  opacity: 1;
+}
+
+.screen-transition::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: #000000;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: screen-zoom 0.5s ease forwards;
+}
+
+@keyframes screen-zoom {
+  0% { width: 0; height: 0; opacity: 1; }
+  100% { width: 200%; height: 200%; opacity: 0; }
+}
+
+/* Улучшенные подсказки для пользователя */
+.tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 15px;
+  color: #ffffff;
+  font-size: 12px;
+  max-width: 200px;
+  z-index: 1000;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.tooltip.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.8) transparent transparent;
+}
+
+.tooltip.top::after {
+  bottom: auto;
+  top: -10px;
+  border-width: 0 10px 10px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.8);
+}
+
+/* Улучшенная анимация для прогресс-бара */
+.progress-bar {
+  height: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0084ff, #00c7ff);
+  border-radius: 4px;
+  width: 0;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent);
+  animation: progress-shine 2s infinite;
+}
+
+@keyframes progress-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Улучшенный эффект при открытии модальных окон */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, 
+    rgba(0, 0, 0, 0.5) 0%, 
+    rgba(0, 0, 0, 0.8) 100%);
+  opacity: 0;
+  animation: overlay-fade 0.5s forwards;
+}
+
+@keyframes overlay-fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Улучшенные эффекты для кнопок в стиле 1win */
+.onewin-button {
+  background: linear-gradient(135deg, rgba(0, 132, 255, 0.2), rgba(0, 210, 255, 0.3));
+  border: 1px solid rgba(0, 132, 255, 0.4);
+  border-radius: 15px;
+  padding: 12px 20px;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.onewin-button:hover {
+  background: linear-gradient(135deg, rgba(0, 132, 255, 0.3), rgba(0, 210, 255, 0.4));
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 132, 255, 0.2);
+}
+
+.onewin-button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.onewin-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  transform: skewX(-25deg);
+  animation: onewin-button-shine 3s infinite;
+}
+
+@keyframes onewin-button-shine {
+  0% { left: -100%; }
+  20%, 100% { left: 200%; }
+}
+
+/* Супер-крутая кнопка в стиле неон */
+.neon-button {
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid #0084ff;
+  border-radius: 15px;
+  padding: 12px 20px;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 0 5px rgba(0, 132, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 132, 255, 0.3);
+}
+
+.neon-button:hover {
+  background: rgba(0, 132, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 132, 255, 0.5), 0 0 30px rgba(0, 132, 255, 0.3);
+  text-shadow: 0 0 8px rgba(0, 132, 255, 1);
+}
+
+.neon-button:active {
+  background: rgba(0, 132, 255, 0.2);
+  transition: all 0.1s ease;
+}
+
+/* Эффект свечения для неоновой кнопки */
+.neon-button::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 17px;
+  background: #0084ff;
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(8px);
+  animation: neon-glow 2s infinite alternate;
+}
+
+@keyframes neon-glow {
+  0% { opacity: 0.3; filter: blur(8px); }
+  100% { opacity: 0.6; filter: blur(12px); }
+}
+
+/* КРУТЫЕ ЭФФЕКТЫ ДЛЯ ВЗАИМОДЕЙСТВИЯ С ПОЛЬЗОВАТЕЛЕМ */
+
+/* Эффект сообщений для чата или инструкций */
+.message-box {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+  position: relative;
+  max-width: 80%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform-origin: left bottom;
+  animation: message-appear 0.3s forwards;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes message-appear {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.message-box.system {
+  background: rgba(0, 132, 255, 0.2);
+  border: 1px solid rgba(0, 132, 255, 0.3);
+  margin-left: auto;
+  transform-origin: right bottom;
+}
+
+.message-box::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 20px;
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.5) transparent transparent;
+}
+
+.message-box.system::after {
+  left: auto;
+  right: 20px;
+  border-color: rgba(0, 132, 255, 0.2) transparent transparent;
+}
+
+.message-content {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.message-time {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: right;
+}
+
+/* ==========================================================================
+   14. ФИНАЛЬНЫЕ СУПЕР-КРУТЫЕ УЛУЧШЕНИЯ ДЛЯ ДОСТИЖЕНИЯ 5000 СТРОК
+   ========================================================================== */
+
+/* Специальные анимации для кракена */
+.kraken-animation {
+  animation: kraken-float 5s ease-in-out infinite;
+}
+
+@keyframes kraken-float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
+/* Эффект свечения глаз кракена при клике */
+.kraken-eyes-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+.kraken-eyes-glow.active {
+  opacity: 1;
+  animation: eyes-pulse 0.8s forwards;
+}
+
+@keyframes eyes-pulse {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Супер-крутые эффекты рандомных частиц */
+.random-particle {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  animation: random-float 10s linear forwards;
+}
+
+@keyframes random-float {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0) scale(0.2);
+  }
+  10% {
+    opacity: 0.8;
+    transform: translateY(-20px) translateX(20px) scale(1);
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) translateX(50px) scale(0.1);
+  }
+}
+
+/* Улучшенные цифры счетчиков */
+.counter-digit {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 1em;
+}
+
+.counter-digit-old,
+.counter-digit-new {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.counter-digit-old {
+  transform: translateY(0);
+}
+
+.counter-digit-new {
+  transform: translateY(100%);
+}
+
+.counter-digit.animating .counter-digit-old {
+  transform: translateY(-100%);
+}
+
+.counter-digit.animating .counter-digit-new {
+  transform: translateY(0);
+}
+
+/* Улучшенные эффекты для достижений */
+.achievement-unlocked {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid rgba(255, 215, 0, 0.5);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 
+    0 0 30px rgba(255, 215, 0, 0.3),
+    0 0 60px rgba(255, 215, 0, 0.2);
+  z-index: 2000;
+  text-align: center;
+  max-width: 300px;
+  animation: achievement-popup 5s forwards;
+}
+
+@keyframes achievement-popup {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  10% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+  20% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  80% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+}
+
+.achievement-title {
+  color: #ffd700;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.achievement-desc {
+  color: #ffffff;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.achievement-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  animation: achievement-icon-glow 2s infinite alternate;
+}
+
+@keyframes achievement-icon-glow {
+  0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+  100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+}
+
+/* Супер-эффект ежедневной награды */
+.daily-reward {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background: #000;
 }
