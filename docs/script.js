@@ -736,7 +736,7 @@ function saveGameData() {
         console.warn('Не удалось сохранить данные игры');
     }
 }
-
+//ggg
 function loadGameData() {
     try {
         const savedData = localStorage.getItem('tapkraken_game_data');
