@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TapKraken | RGB Edition</title>
+  <!-- Футуристичный шрифт для усиления эффекта -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <!-- SEO метатеги -->
+  <meta name="description" content="TapKraken - захватывающая кликер-игра с Кракеном в сине-красно-белой гамме. Собирай монеты, улучшай своего Кракена и соревнуйся с друзьями!">
+  <!-- Open Graph tags -->
+  <meta property="og:title" content="TapKraken" />
+  <meta property="og:description" content="Кликай на Кракена, собирай монеты и стань лучшим в мире TapKraken!" />
+  <meta property="og:type" content="website" />
+  <!-- Дополнительные стили для улучшения интерфейса -->
+  <style>
+    /* Улучшенные кнопки меню */
+    .menu-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      padding: 12px 0;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .menu-button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff3b30, #0a84ff, #34c759);
+      background-size: 300% 300%;
+      animation: button-gradient 4s linear infinite;
+      z-index: -1;
+      opacity: 0.7;
+      border-radius: 15px;
+      filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+    
+    @keyframes button-gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .menu-button i {
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: white;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      transition: all 0.3s ease;
+    }
+    
+    .menu-button span {
+      font-size: 11px;
+      font-weight: bold;
+      color: white;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    }
+    
+    .menu-button:active {
+      transform: scale(0.9);
+    }
+    
+    .menu-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+    }
+    
+    .menu-button:hover::before {
+      opacity: 0.9;
+      filter: blur(6px);
+    }
+    
+    .menu-button:hover i {
+      transform: scale(1.1);
+    }
+    
+    /* Стили для улучшенного кракена */
+    #kraken-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    #kraken {
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 15px rgba(255, 59, 48, 0.7));
+      transition: all 0.2s ease;
+      transform-origin: center;
+      mix-blend-mode: screen;
+      filter: brightness(1.2) contrast(1.2) saturate(1.2);
+    }
+    
+    .kraken-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      background: radial-gradient(circle, rgba(255,59,48,0.3) 0%, rgba(10,132,255,0.2) 50%, rgba(52,199,89,0) 70%);
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: glow-pulse 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow-pulse {
+      0% { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.1); opacity: 0.9; }
+    }
+    
+    /* Эффект тапа */
+    .tap-effect {
+      position: absolute;
+      pointer-events: none;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,59,48,0.6) 30%, transparent 70%);
+      animation: tap-ripple 0.6s ease-out forwards;
+      z-index: 3;
+    }
+    
+    @keyframes tap-ripple {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    
+    /* Улучшения для статистики */
+    .stat-item {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .stat-item:hover {
+      background: rgba(0, 0, 0, 0.8);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .stat-item i {
+      color: #0a84ff;
+      text-shadow: 0 0 5px rgba(10, 132, 255, 0.7);
+    }
+    
+    /* Стили для энергии */
+    .energy-bar-container {
+      position: relative;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .energy-bar {
+      height: 8px;
+      background: linear-gradient(90deg, #34c759 0%, #30d158 50%, #32d74b 100%);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px rgba(52, 199, 89, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <!-- Проверка устройства -->
+  <div id="device-check" style="display: none;">
+    <div class="device-check-content">
+      <h2>📱 Игра для мобильных устройств</h2>
+      <p>TapKraken оптимизирован для игры на телефоне</p>
+      <div class="qr-container">
+        <img src="TAPKRAKEN.png" alt="QR код для доступа с телефона" class="qr-code">
+      </div>
+      <div class="small-text">
+        Отсканируйте QR-код камерой телефона для перехода к игре
+      </div>
+    </div>
+  </div>
+
+  <!-- Загрузочный экран -->
+  <div id="loading-screen" style="display: flex;">
+    <img id="loading-image" src="loading-screen.webp" alt="TapKraken Loading" draggable="false">
+    <h1 class="loading-title">TAPKRAKEN</h1>
+    <div class="loading-info">
+      <div class="loading-tip">
+        <span class="tip-text">💡 Совет: Каждый клик приносит больше монет с улучшениями!</span>
+      </div>
+    </div>
+    
+    <!-- Прогресс-бар загрузки -->
+    <div class="loading-progress-container">
+      <div id="loading-progress-bar"></div>
+    </div>
+    
+    <div class="loading-status">
+      <span id="loading-text">Пробуждение древнего Кракена...</span>
+    </div>
+  </div>
+
+  <!-- Основной контент игры -->
+  <div id="main-content" style="display: none;">
+
+    <!-- Верхняя панель -->
+    <div class="top-bar">
+      <!-- Валюта -->
+      <div class="currency-display">
+        <div class="coin-icon">
+          <i class="fas fa-coins"></i>
+        </div>
+        <span id="score">0</span>
+      </div>
+
+      <!-- Статистика -->
+      <div class="stats-container">
+        <div class="stat-item">
+          <i class="fas fa-fist-raised"></i>
+          <span>Сила: <span id="tap-power">1</span></span>
+          <div class="multiplier">
+            <i class="fas fa-times"></i>
+            <span id="multiplier">1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Панель энергии -->
+    <div class="energy-container">
+      <div class="energy-info">
+        <div class="energy-text">
+          <i class="fas fa-bolt"></i>
+          <span>Энергия</span>
+          <span id="energy-count">500/500</span>
+        </div>
+        <div class="energy-bar-container">
+          <div id="energy-bar" style="width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Основная игровая зона -->
+    <div class="game-area">
+      <div id="kraken-wrapper">
+        <div class="kraken-glow"></div>
+        <img id="kraken" src="kraken_1.png" alt="Кракен" draggable="false">
+      </div>
+    </div>
+
+    <!-- Нижнее меню -->
+    <div class="bottom-menu">
+      <div class="menu-buttons">
+        <button class="menu-button" id="upgrades-btn">
+          <i class="fas fa-arrow-up"></i>
+          <span>Улучшения</span>
+        </button>
+        <button class="menu-button" id="tasks-btn">
+          <i class="fas fa-tasks"></i>
+          <span>Задания</span>
+        </button>
+        <button class="menu-button" id="city-btn" onclick="openFixedCityTab()">
+          <i class="fas fa-city"></i>
+          <span>Город</span>
+        </button>
+        <button class="menu-button" id="friends-btn">
+          <i class="fas fa-users"></i>
+          <span>Друзья</span>
+        </button>
+        <button class="menu-button" id="leaderboard-btn">
+          <i class="fas fa-trophy"></i>
+          <span>Рейтинг</span>
+        </button>
+        <button class="menu-button" id="puzzle-btn">
+          <i class="fas fa-puzzle-piece"></i>
+          <span>Головоломка</span>
+        </button>
+        <button class="menu-button" id="shop-btn">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Магазин</span>
+        </button>
+        <button class="menu-button" id="boost-btn">
+          <i class="fas fa-rocket"></i>
+          <span>Бустеры</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Контент-панели -->
+    <div id="content-panels">
+      <!-- Панель улучшений -->
+      <div id="upgrades-panel" class="panel">
+        <div class="panel-header">
+          <h3>🔥 Улучшения</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="upgrade-item">
+            <div class="upgrade-info">
+              <h4>💪 Сила тапа</h4>
+              <p>Увеличивает урон за клик</p>
+            </div>
+            <div class="upgrade-cost">
+              <span id="tap-power-cost">10</span>
+              <i class="fas fa-coins"></i>
+            </div>
+            <button class="upgrade-btn" id="tap-power-upgrade">Купить</button>
+          </div>
+          
+          <div class="upgrade-item">
+            <div class="upgrade-info">
+              <h4>⚡ Энергия</h4>
+              <p>Увеличивает максимальную энергию</p>
+            </div>
+            <div class="upgrade-cost">
+              <span id="energy-cost">25</span>
+              <i class="fas fa-coins"></i>
+            </div>
+            <button class="upgrade-btn" id="energy-upgrade">Купить</button>
+          </div>
+          
+          <div class="upgrade-item">
+            <div class="upgrade-info">
+              <h4>🔋 Регенерация</h4>
+              <p>Ускоряет восстановление энергии</p>
+            </div>
+            <div class="upgrade-cost">
+              <span id="regen-cost">50</span>
+              <i class="fas fa-coins"></i>
+            </div>
+            <button class="upgrade-btn" id="regen-upgrade">Купить</button>
+          </div>
+          
+          <div class="upgrade-item">
+            <div class="upgrade-info">
+              <h4>🤖 Автокликер</h4>
+              <p>Автоматические клики каждую секунду</p>
+            </div>
+            <div class="upgrade-cost">
+              <span id="auto-cost">100</span>
+              <i class="fas fa-coins"></i>
+            </div>
+            <button class="upgrade-btn" id="auto-upgrade">Купить</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель заданий -->
+      <div id="tasks-panel" class="panel">
+        <div class="panel-header">
+          <h3>🎯 Задания</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div id="tasks-list">
+            <!-- Задания будут сгенерированы JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель друзей -->
+      <div id="friends-panel" class="panel">
+        <div class="panel-header">
+          <h3>👥 Друзья</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="friends-filter">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="online">В сети</button>
+            <button class="filter-btn" data-filter="top">Топ игроки</button>
+          </div>
+          <div id="friends-list">
+            <!-- Список друзей -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель рейтинга -->
+      <div id="leaderboard-panel" class="panel">
+        <div class="panel-header">
+          <h3>🏆 Рейтинг</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="leaderboard-tabs">
+            <button class="tab-btn active" data-tab="global">Мировой</button>
+            <button class="tab-btn" data-tab="friends">Друзья</button>
+            <button class="tab-btn" data-tab="weekly">Неделя</button>
+          </div>
+          <div id="leaderboard-list">
+            <!-- Рейтинг -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель головоломки -->
+      <div id="puzzle-panel" class="panel">
+        <div class="panel-header">
+          <h3>🧩 Головоломка</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="puzzle-difficulty">
+            <button class="difficulty-btn active" data-difficulty="easy">Легко</button>
+            <button class="difficulty-btn" data-difficulty="medium">Средне</button>
+            <button class="difficulty-btn" data-difficulty="hard">Сложно</button>
+          </div>
+          <div class="puzzle-info">
+            <div class="puzzle-stats">
+              <span>Время: <span id="puzzle-timer">60</span>с</span>
+              <span>Награда: <span id="puzzle-reward">50</span></span>
+            </div>
+          </div>
+          <div id="puzzle-grid" class="puzzle-container">
+            <!-- Головоломка -->
+          </div>
+          <button id="start-puzzle" class="action-btn">Начать игру</button>
+        </div>
+      </div>
+
+      <!-- Панель магазина -->
+      <div id="shop-panel" class="panel">
+        <div class="panel-header">
+          <h3>🛒 Магазин</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="shop-categories">
+            <button class="category-btn active" data-category="upgrades">Улучшения</button>
+            <button class="category-btn" data-category="skins">Скины</button>
+            <button class="category-btn" data-category="boosters">Бустеры</button>
+          </div>
+          <div id="shop-items">
+            <!-- Товары магазина -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель бустеров -->
+      <div id="boost-panel" class="panel">
+        <div class="panel-header">
+          <h3>🚀 Бустеры</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="booster-item">
+            <div class="booster-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="booster-info">
+              <h4>Двойной урон</h4>
+              <p>Удваивает урон на 5 минут</p>
+            </div>
+            <button class="booster-btn" id="double-damage-boost">Активировать</button>
+          </div>
+          
+          <div class="booster-item">
+            <div class="booster-icon">
+              <i class="fas fa-battery-full"></i>
+            </div>
+            <div class="booster-info">
+              <h4>Полная энергия</h4>
+              <p>Мгновенно восстанавливает всю энергию</p>
+            </div>
+            <button class="booster-btn" id="full-energy-boost">Активировать</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Уведомления -->
+    <div id="notifications"></div>
+    
+    <!-- Фоновые эффекты -->
+    <div id="background-effects">
+      <!-- Пузырьки и частицы -->
+    </div>
+  </div>
+
+  <!-- Подключение скриптов -->
+  <script src="script.js"></script>
+  <script src="city_functions_enhanced.js"></script>
+  <script src="fix_city.js"></script>
+  <script src="puzzle.js"></script>
+</body>
+</html>
