@@ -389,7 +389,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=message,
-                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak0/")]])
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak1/")]])
             )
             
     except Exception as e:
