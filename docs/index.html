@@ -119,135 +119,131 @@
       background: radial-gradient(circle, rgba(255,59,48,0.3) 0%, rgba(10,132,255,0.2) 50%, rgba(52,199,89,0) 70%);
       border-radius: 50%;
       opacity: 0.7;
-      filter: blur(20px);
-      animation: kraken-pulse 3s ease-in-out infinite;
+      animation: glow-pulse 3s ease-in-out infinite alternate;
     }
     
-    @keyframes kraken-pulse {
-      0%, 100% { 
-        transform: scale(0.9);
-        opacity: 0.7;
-      }
-      50% { 
-        transform: scale(1.1);
-        opacity: 0.9;
-      }
+    @keyframes glow-pulse {
+      0% { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.1); opacity: 0.9; }
     }
     
-    /* Улучшенные эффекты нажатия */
-    #tap-effects {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 10;
-      overflow: visible;
-    }
-    
+    /* Эффект тапа */
     .tap-effect {
       position: absolute;
       pointer-events: none;
       border-radius: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: radial-gradient(circle, rgba(255,59,48,0.8) 0%, rgba(10,132,255,0.4) 60%, rgba(52,199,89,0) 100%);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-      animation: tap-wave 0.6s ease-out forwards;
-      z-index: 100;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,59,48,0.6) 30%, transparent 70%);
+      animation: tap-ripple 0.6s ease-out forwards;
+      z-index: 3;
     }
     
-    @keyframes tap-wave {
+    @keyframes tap-ripple {
       0% {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0.8;
-      }
-      70% {
-        transform: translate(-50%, -50%) scale(1.8);
-        opacity: 0.2;
+        transform: scale(0);
+        opacity: 1;
       }
       100% {
-        transform: translate(-50%, -50%) scale(2);
+        transform: scale(4);
         opacity: 0;
       }
     }
     
-    /* Стилизация индикатора NEW */
-    .new-badge {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      background: linear-gradient(45deg, #ff3b30, #ff9500);
-      color: white;
-      font-size: 9px;
-      font-weight: bold;
-      padding: 3px 6px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(255, 59, 48, 0.5);
-      animation: pulse-badge 1.5s infinite;
+    /* Улучшения для статистики */
+    .stat-item {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
     }
     
-    @keyframes pulse-badge {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    .stat-item:hover {
+      background: rgba(0, 0, 0, 0.8);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .stat-item i {
+      color: #0a84ff;
+      text-shadow: 0 0 5px rgba(10, 132, 255, 0.7);
+    }
+    
+    /* Стили для энергии */
+    .energy-bar-container {
+      position: relative;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .energy-bar {
+      height: 8px;
+      background: linear-gradient(90deg, #34c759 0%, #30d158 50%, #32d74b 100%);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px rgba(52, 199, 89, 0.5);
     }
   </style>
 </head>
 <body>
   <!-- Проверка устройства -->
-  <div id="device-check">
+  <div id="device-check" style="display: none;">
     <div class="device-check-content">
-      <h2>TapKraken Mobile</h2>
-      <p>Игра TapKraken доступна только на мобильных устройствах</p>
+      <h2>📱 Игра для мобильных устройств</h2>
+      <p>TapKraken оптимизирован для игры на телефоне</p>
       <div class="qr-container">
-        <img src="TAPKRAKEN.png" alt="QR Code" class="qr-code">
+        <img src="TAPKRAKEN.png" alt="QR код для доступа с телефона" class="qr-code">
       </div>
-      <div class="device-info">
-        <div class="device-icon desktop">
-          <i class="fas fa-desktop"></i>
-          <span>Компьютер</span>
-        </div>
-        <div class="device-icon mobile">
-          <i class="fas fa-mobile-alt"></i>
-          <span>Телефон</span>
-        </div>
+      <div class="small-text">
+        Отсканируйте QR-код камерой телефона для перехода к игре
       </div>
-      <p class="small-text">Сканируйте QR-код для игры на смартфоне</p>
     </div>
   </div>
 
-  <!-- Загрузочный экран с анимацией -->
-  <div id="loading-screen">
-    <img src="loading-screen.webp" alt="Загрузка..." id="loading-image">
+  <!-- Загрузочный экран -->
+  <div id="loading-screen" style="display: flex;">
+    <img id="loading-image" src="loading-screen.webp" alt="TapKraken Loading" draggable="false">
+    <h1 class="loading-title">TAPKRAKEN</h1>
+    <div class="loading-info">
+      <div class="loading-tip">
+        <span class="tip-text">💡 Совет: Каждый клик приносит больше монет с улучшениями!</span>
+      </div>
+    </div>
+    
+    <!-- Прогресс-бар загрузки -->
     <div class="loading-progress-container">
       <div id="loading-progress-bar"></div>
     </div>
-    <h1 class="loading-title">TAPKRAKEN</h1>
+    
+    <div class="loading-status">
+      <span id="loading-text">Пробуждение древнего Кракена...</span>
+    </div>
   </div>
-  
-  <!-- Дополнительный контейнер для фоновых частиц -->
-  <div id="particle-container"></div>
 
-  <!-- Основной контент -->
+  <!-- Основной контент игры -->
   <div id="main-content" style="display: none;">
-    <!-- Верхняя панель с показателями игрока -->
+
+    <!-- Верхняя панель -->
     <div class="top-bar">
+      <!-- Валюта -->
       <div class="currency-display">
         <div class="coin-icon">
-          <i class="fas fa-bolt"></i>
+          <i class="fas fa-coins"></i>
         </div>
         <span id="score">0</span>
       </div>
+
+      <!-- Статистика -->
       <div class="stats-container">
         <div class="stat-item">
-          <i class="fas fa-coins"></i>
-          <span id="income-per-hour">0</span> Доход/час
-        </div>
-        <div class="stat-item">
-          <i class="fas fa-hand-pointer"></i>
-          <span id="income-per-tap">1</span> Доход/тап
+          <i class="fas fa-fist-raised"></i>
+          <span>Сила: <span id="tap-power">1</span></span>
           <div class="multiplier">
             <i class="fas fa-times"></i>
-            <span id="tap-multiplier">1</span>
+            <span id="multiplier">1</span>
           </div>
         </div>
       </div>
@@ -255,597 +251,260 @@
 
     <!-- Панель энергии -->
     <div class="energy-container">
-      <i class="fas fa-bolt energy-icon"></i>
-      <div class="energy-bar-container">
-        <div id="energy-bar" class="energy-bar"></div>
+      <div class="energy-info">
+        <div class="energy-text">
+          <i class="fas fa-bolt"></i>
+          <span>Энергия</span>
+          <span id="energy-count">500/500</span>
+        </div>
+        <div class="energy-bar-container">
+          <div id="energy-bar" style="width: 100%;"></div>
+        </div>
       </div>
-      <span id="energy-text"><span id="energy">500</span>/<span id="max-energy">500</span></span>
     </div>
 
     <!-- Основная игровая зона -->
     <div class="game-area">
-      <!-- Левое меню -->
-      <div class="side-menu left-menu">
-        <div class="menu-button tasks-button" onclick="openTasks()">
-          <div class="indicator">3</div>
-          <i class="fas fa-gift"></i>
+      <div id="kraken-wrapper">
+        <div class="kraken-glow"></div>
+        <img id="kraken" src="kraken_1.png" alt="Кракен" draggable="false">
+      </div>
+    </div>
+
+    <!-- Нижнее меню -->
+    <div class="bottom-menu">
+      <div class="menu-buttons">
+        <button class="menu-button" id="upgrades-btn">
+          <i class="fas fa-arrow-up"></i>
+          <span>Улучшения</span>
+        </button>
+        <button class="menu-button" id="tasks-btn">
+          <i class="fas fa-tasks"></i>
           <span>Задания</span>
-        </div>
-        <div class="menu-button leaderboard-button" onclick="openLeaderboard()">
-          <i class="fas fa-trophy"></i>
-          <span>Рейтинг</span>
-        </div>
-        <div class="menu-button friends-button" onclick="openFriends()">
-          <div class="indicator">5</div>
-          <i class="fas fa-users"></i>
-          <span>Друзья</span>
-        </div>
-      </div>
-
-      <!-- Центральная зона с Кракеном -->
-      <div id="kraken-container">
-        <!-- При клике вызывается tap(event) -->
-        <div id="kraken-wrapper">
-          <img id="kraken" src="kraken_1.png" alt="Kraken" draggable="false" onclick="tap(event)">
-          <div class="kraken-glow"></div>
-        </div>
-        <!-- Контейнер для визуальных эффектов -->
-        <div id="tap-effects"></div>
-      </div>
-
-      <!-- Правое меню -->
-      <div class="side-menu right-menu">
-        <div class="menu-button shop-button" onclick="openShop()">
-          <i class="fas fa-store"></i>
-          <span>Магазин</span>
-        </div>
-        <div class="menu-button puzzle-button" onclick="openPuzzle()">
-          <i class="fas fa-puzzle-piece"></i>
-          <span>Головоломка</span>
-        </div>
-        <div class="menu-button telegram-button" onclick="openTelegramCommands()">
-          <i class="fab fa-telegram"></i>
-          <span>Команды</span>
-        </div>
-        <div class="menu-button city-button" onclick="openCityTab()">
-          <div class="new-badge">NEW</div>
+        </button>
+        <button class="menu-button" id="city-btn" onclick="openFixedCityTab()">
           <i class="fas fa-city"></i>
           <span>Город</span>
+        </button>
+        <button class="menu-button" id="friends-btn">
+          <i class="fas fa-users"></i>
+          <span>Друзья</span>
+        </button>
+        <button class="menu-button" id="leaderboard-btn">
+          <i class="fas fa-trophy"></i>
+          <span>Рейтинг</span>
+        </button>
+        <button class="menu-button" id="puzzle-btn">
+          <i class="fas fa-puzzle-piece"></i>
+          <span>Головоломка</span>
+        </button>
+        <button class="menu-button" id="shop-btn">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Магазин</span>
+        </button>
+        <button class="menu-button" id="boost-btn">
+          <i class="fas fa-rocket"></i>
+          <span>Бустеры</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Контент-панели -->
+    <div id="content-panels">
+      <!-- Панель улучшений -->
+      <div id="upgrades-panel" class="panel">
+        <div class="panel-header">
+          <h3>🔥 Улучшения</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="upgrade-item">
+            <div class="upgrade-info">
+              <h4>💪 Сила тапа</h4>
+              <p>Увеличивает урон за клик</p>
+            </div>
+            <div class="upgrade-cost">
+              <span id="tap-power-cost">10</span>
+              <i class="fas fa-coins"></i>
+            </div>
+            <button class="upgrade-btn" id="tap-power-upgrade">Купить</button>
+          </div>
+          
+          <div class="upgrade-item">
+            <div class="upgrade-info">
+              <h4>⚡ Энергия</h4>
+              <p>Увеличивает максимальную энергию</p>
+            </div>
+            <div class="upgrade-cost">
+              <span id="energy-cost">25</span>
+              <i class="fas fa-coins"></i>
+            </div>
+            <button class="upgrade-btn" id="energy-upgrade">Купить</button>
+          </div>
+          
+          <div class="upgrade-item">
+            <div class="upgrade-info">
+              <h4>🔋 Регенерация</h4>
+              <p>Ускоряет восстановление энергии</p>
+            </div>
+            <div class="upgrade-cost">
+              <span id="regen-cost">50</span>
+              <i class="fas fa-coins"></i>
+            </div>
+            <button class="upgrade-btn" id="regen-upgrade">Купить</button>
+          </div>
+          
+          <div class="upgrade-item">
+            <div class="upgrade-info">
+              <h4>🤖 Автокликер</h4>
+              <p>Автоматические клики каждую секунду</p>
+            </div>
+            <div class="upgrade-cost">
+              <span id="auto-cost">100</span>
+              <i class="fas fa-coins"></i>
+            </div>
+            <button class="upgrade-btn" id="auto-upgrade">Купить</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель заданий -->
+      <div id="tasks-panel" class="panel">
+        <div class="panel-header">
+          <h3>🎯 Задания</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div id="tasks-list">
+            <!-- Задания будут сгенерированы JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель друзей -->
+      <div id="friends-panel" class="panel">
+        <div class="panel-header">
+          <h3>👥 Друзья</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="friends-filter">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="online">В сети</button>
+            <button class="filter-btn" data-filter="top">Топ игроки</button>
+          </div>
+          <div id="friends-list">
+            <!-- Список друзей -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель рейтинга -->
+      <div id="leaderboard-panel" class="panel">
+        <div class="panel-header">
+          <h3>🏆 Рейтинг</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="leaderboard-tabs">
+            <button class="tab-btn active" data-tab="global">Мировой</button>
+            <button class="tab-btn" data-tab="friends">Друзья</button>
+            <button class="tab-btn" data-tab="weekly">Неделя</button>
+          </div>
+          <div id="leaderboard-list">
+            <!-- Рейтинг -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель головоломки -->
+      <div id="puzzle-panel" class="panel">
+        <div class="panel-header">
+          <h3>🧩 Головоломка</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="puzzle-difficulty">
+            <button class="difficulty-btn active" data-difficulty="easy">Легко</button>
+            <button class="difficulty-btn" data-difficulty="medium">Средне</button>
+            <button class="difficulty-btn" data-difficulty="hard">Сложно</button>
+          </div>
+          <div class="puzzle-info">
+            <div class="puzzle-stats">
+              <span>Время: <span id="puzzle-timer">60</span>с</span>
+              <span>Награда: <span id="puzzle-reward">50</span></span>
+            </div>
+          </div>
+          <div id="puzzle-grid" class="puzzle-container">
+            <!-- Головоломка -->
+          </div>
+          <button id="start-puzzle" class="action-btn">Начать игру</button>
+        </div>
+      </div>
+
+      <!-- Панель магазина -->
+      <div id="shop-panel" class="panel">
+        <div class="panel-header">
+          <h3>🛒 Магазин</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="shop-categories">
+            <button class="category-btn active" data-category="upgrades">Улучшения</button>
+            <button class="category-btn" data-category="skins">Скины</button>
+            <button class="category-btn" data-category="boosters">Бустеры</button>
+          </div>
+          <div id="shop-items">
+            <!-- Товары магазина -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Панель бустеров -->
+      <div id="boost-panel" class="panel">
+        <div class="panel-header">
+          <h3>🚀 Бустеры</h3>
+          <button class="close-panel">×</button>
+        </div>
+        <div class="panel-content">
+          <div class="booster-item">
+            <div class="booster-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="booster-info">
+              <h4>Двойной урон</h4>
+              <p>Удваивает урон на 5 минут</p>
+            </div>
+            <button class="booster-btn" id="double-damage-boost">Активировать</button>
+          </div>
+          
+          <div class="booster-item">
+            <div class="booster-icon">
+              <i class="fas fa-battery-full"></i>
+            </div>
+            <div class="booster-info">
+              <h4>Полная энергия</h4>
+              <p>Мгновенно восстанавливает всю энергию</p>
+            </div>
+            <button class="booster-btn" id="full-energy-boost">Активировать</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Нижняя навигационная панель удалена по запросу пользователя -->
-    
-    <!-- Модальные окна -->
-    
-    <!-- Магазин -->
-    <div id="shop-modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Магазин</h2>
-          <span class="close-modal" onclick="closeShop()">&times;</span>
-        </div>
-        <div class="modal-body">
-          <!-- Вкладки магазина -->
-          <div class="tab-navigation">
-            <div class="tab active" data-tab="power">Мощность</div>
-            <div class="tab" data-tab="energy">Энергия</div>
-            <div class="tab" data-tab="auto">Авто-клики</div>
-            <div class="tab" data-tab="boosters">Бустеры</div>
-            <div class="tab" data-tab="premium">Премиум</div>
-          </div>
-          
-          <!-- Вкладка мощности -->
-          <div class="tab-content active" id="power-tab">
-            <div class="shop-items">
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-fist-raised"></i></div>
-                <div class="item-info">
-                  <h3>Базовая мощность</h3>
-                  <p>+1 к мощности клика</p>
-                </div>
-                <button class="buy-button" onclick="buyUpgrade(1, 50, 10)">
-                  <span class="cost">50</span>
-                  <i class="fas fa-bolt energy-cost">10</i>
-                </button>
-              </div>
-              
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-fist-raised"></i><i class="fas fa-plus"></i></div>
-                <div class="item-info">
-                  <h3>Продвинутая мощность</h3>
-                  <p>+5 к мощности клика</p>
-                </div>
-                <button class="buy-button" onclick="buyUpgrade(5, 200, 50)">
-                  <span class="cost">200</span>
-                  <i class="fas fa-bolt energy-cost">50</i>
-                </button>
-              </div>
-              
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-fist-raised"></i><i class="fas fa-plus"></i><i class="fas fa-plus"></i></div>
-                <div class="item-info">
-                  <h3>Супер мощность</h3>
-                  <p>+10 к мощности клика</p>
-                </div>
-                <button class="buy-button" onclick="buyUpgrade(10, 1000, 100)">
-                  <span class="cost">1K</span>
-                  <i class="fas fa-bolt energy-cost">100</i>
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Вкладка энергии -->
-          <div class="tab-content" id="energy-tab">
-            <div class="shop-items">
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-bolt"></i></div>
-                <div class="item-info">
-                  <h3>Энергия +50</h3>
-                  <p>Увеличивает макс. энергию на 50</p>
-                </div>
-                <button class="buy-button" onclick="buyEnergyRegen(50, 200)">
-                  <span class="cost">200</span>
-                </button>
-              </div>
-              
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-bolt"></i><i class="fas fa-plus"></i></div>
-                <div class="item-info">
-                  <h3>Энергия +100</h3>
-                  <p>Увеличивает макс. энергию на 100</p>
-                </div>
-                <button class="buy-button" onclick="buyEnergyRegen(100, 500)">
-                  <span class="cost">500</span>
-                </button>
-              </div>
-              
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-bolt"></i><i class="fas fa-tachometer-alt"></i></div>
-                <div class="item-info">
-                  <h3>Регенерация +25%</h3>
-                  <p>Увеличивает скорость восстановления энергии</p>
-                </div>
-                <button class="buy-button" onclick="buyEnergyRegen(0.25, 1000)">
-                  <span class="cost">1K</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Вкладка авто-кликов -->
-          <div class="tab-content" id="auto-tab">
-            <div class="shop-items">
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-mouse-pointer"></i></div>
-                <div class="item-info">
-                  <h3>Авто-клик</h3>
-                  <p>+1 клик в секунду</p>
-                </div>
-                <button class="buy-button" onclick="buyAutoClicker(1, 500)">
-                  <span class="cost">500</span>
-                </button>
-              </div>
-              
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-mouse-pointer"></i><i class="fas fa-plus"></i></div>
-                <div class="item-info">
-                  <h3>Улучшенный авто-клик</h3>
-                  <p>+2 клика в секунду</p>
-                </div>
-                <button class="buy-button" onclick="buyAutoClicker(2, 1500)">
-                  <span class="cost">1.5K</span>
-                </button>
-              </div>
-              
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-mouse-pointer"></i><i class="fas fa-bolt"></i></div>
-                <div class="item-info">
-                  <h3>Турбо-кликер</h3>
-                  <p>+5 кликов в секунду</p>
-                </div>
-                <button class="buy-button" onclick="buyAutoClicker(5, 5000)">
-                  <span class="cost">5K</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Вкладка бустеров -->
-          <div class="tab-content" id="boosters-tab">
-            <div class="shop-items">
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-times"></i><i class="fas fa-2x"></i></div>
-                <div class="item-info">
-                  <h3>Множитель x2</h3>
-                  <p>Удваивает доход от кликов на 30 минут</p>
-                </div>
-                <button class="buy-button" onclick="buyBooster('multiplier', 1000)">
-                  <span class="cost">1K</span>
-                </button>
-              </div>
-              
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-tachometer-alt"></i></div>
-                <div class="item-info">
-                  <h3>Ускоритель</h3>
-                  <p>Увеличивает скорость авто-кликов в 2 раза на 15 минут</p>
-                </div>
-                <button class="buy-button" onclick="buyBooster('speed', 800)">
-                  <span class="cost">800</span>
-                </button>
-              </div>
-              
-              <div class="shop-item">
-                <div class="item-icon"><i class="fas fa-battery-full"></i></div>
-                <div class="item-info">
-                  <h3>Энергетический бустер</h3>
-                  <p>Мгновенно восстанавливает всю энергию</p>
-                </div>
-                <button class="buy-button" onclick="buyBooster('energy', 500)">
-                  <span class="cost">500</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Вкладка премиум -->
-          <div class="tab-content" id="premium-tab">
-            <div class="shop-items">
-              <div class="shop-item premium-item">
-                <div class="item-icon premium-icon"><i class="fas fa-crown"></i></div>
-                <div class="item-info">
-                  <h3>VIP Статус</h3>
-                  <p>Постоянное увеличение дохода на 50% и специальные бонусы</p>
-                </div>
-                <button class="buy-button premium-button" onclick="buyPremium(5000)">
-                  <span class="cost">5K</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Задания -->
-    <div id="tasks-modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Задания</h2>
-          <span class="close-modal" onclick="closeTasks()">&times;</span>
-        </div>
-        <div class="modal-body">
-          <div id="tasks-container">
-            <!-- Задания будут добавлены динамически -->
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Друзья -->
-    <div id="friends-modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Друзья</h2>
-          <span class="close-modal" onclick="closeFriends()">&times;</span>
-        </div>
-        <div class="modal-body">
-          <div class="friends-search">
-            <input type="text" placeholder="Поиск друзей..." oninput="filterFriends()">
-            <div class="filter-buttons">
-              <button class="filter-button active" data-filter="all">Все</button>
-              <button class="filter-button" data-filter="online">Онлайн</button>
-              <button class="filter-button" data-filter="gifts">Подарки</button>
-            </div>
-          </div>
-          <div id="friends-container">
-            <!-- Друзья будут добавлены динамически -->
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Рейтинг -->
-    <div id="leaderboard-modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Рейтинг</h2>
-          <span class="close-modal" onclick="closeLeaderboard()">&times;</span>
-        </div>
-        <div class="modal-body">
-          <div class="leaderboard-tabs">
-            <button class="leaderboard-tab active" data-type="global">Глобальный</button>
-            <button class="leaderboard-tab" data-type="friends">Друзья</button>
-            <button class="leaderboard-tab" data-type="weekly">За неделю</button>
-          </div>
-          <div id="leaderboard-container">
-            <!-- Список лидеров будет добавлен динамически -->
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Telegram команды -->
-    <div id="telegram-commands-modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Telegram команды</h2>
-          <span class="close-modal" onclick="closeTelegramCommands()">&times;</span>
-        </div>
-        <div class="modal-body">
-          <div class="commands-list">
-            <div class="command-item">
-              <div class="command-name">/start</div>
-              <div class="command-description">Начать игру и получить информацию</div>
-            </div>
-            <div class="command-item">
-              <div class="command-name">/help</div>
-              <div class="command-description">Получить список доступных команд</div>
-            </div>
-            <div class="command-item">
-              <div class="command-name">/info</div>
-              <div class="command-description">Получить информацию о вашем прогрессе</div>
-            </div>
-            <div class="command-item">
-              <div class="command-name">/daily</div>
-              <div class="command-description">Получить ежедневную награду</div>
-            </div>
-            <div class="command-item">
-              <div class="command-name">/gift</div>
-              <div class="command-description">Отправить подарок другу</div>
-            </div>
-            <div class="command-item">
-              <div class="command-name">/invite</div>
-              <div class="command-description">Пригласить друзей в игру</div>
-            </div>
-            <div class="command-item">
-              <div class="command-name">/boost</div>
-              <div class="command-description">Активировать временный буст</div>
-            </div>
-          </div>
-          <div class="share-container">
-            <p>Поделитесь игрой с друзьями:</p>
-            <div class="share-buttons">
-              <button class="share-button telegram" onclick="shareToBots()">
-                <i class="fab fa-telegram"></i> Поделиться
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Головоломка -->
-    <div id="puzzle-modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Головоломка</h2>
-          <span class="close-modal" onclick="closePuzzle()">&times;</span>
-        </div>
-        <div class="modal-body">
-          <div class="puzzle-difficulty">
-            <button class="difficulty-button" onclick="startPuzzle('easy')">Легкий</button>
-            <button class="difficulty-button" onclick="startPuzzle('medium')">Средний</button>
-            <button class="difficulty-button" onclick="startPuzzle('hard')">Сложный</button>
-          </div>
-          <div id="puzzle-container">
-            <!-- Головоломка будет добавлена динамически -->
-          </div>
-          <div id="puzzle-timer" class="puzzle-timer">01:00</div>
-        </div>
-      </div>
-    </div>
-    
     <!-- Уведомления -->
-    <div id="notification" class="notification">
-      <div class="notification-content">
-        <i class="fas fa-info-circle"></i>
-        <span id="notification-message"></span>
-      </div>
+    <div id="notifications"></div>
+    
+    <!-- Фоновые эффекты -->
+    <div id="background-effects">
+      <!-- Пузырьки и частицы -->
     </div>
   </div>
 
-  <!-- Скрипты -->
+  <!-- Подключение скриптов -->
   <script src="script.js"></script>
+  <script src="city_functions_enhanced.js"></script>
+  <script src="fix_city.js"></script>
   <script src="puzzle.js"></script>
-  <script src="fix_city_final.js"></script>
-  
-  <script>
-    // Улучшения интерфейса и анимаций
-    document.addEventListener('DOMContentLoaded', function() {
-      // Улучшаем эффект нажатия
-      const originalCreateParticles = window.createParticles;
-      window.createParticles = function(event) {
-        // Оригинальная функция 
-        if (originalCreateParticles) {
-          originalCreateParticles(event);
-        }
-        
-        const krakenContainer = document.getElementById('kraken-container');
-        const tapEffects = document.getElementById('tap-effects');
-        
-        if (!krakenContainer || !tapEffects) return;
-        
-        // Координаты клика
-        const rect = krakenContainer.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        
-        // Создаем главный круговой эффект
-        const tapEffect = document.createElement('div');
-        tapEffect.className = 'tap-effect';
-        tapEffects.appendChild(tapEffect);
-        tapEffect.style.left = x + 'px';
-        tapEffect.style.top = y + 'px';
-        
-        // Дополнительное свечение
-        const glowEffect = document.createElement('div');
-        glowEffect.style.position = 'absolute';
-        glowEffect.style.width = '100px';
-        glowEffect.style.height = '100px';
-        glowEffect.style.left = x + 'px';
-        glowEffect.style.top = y + 'px';
-        glowEffect.style.borderRadius = '50%';
-        glowEffect.style.background = 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(10,132,255,0.2) 50%, transparent 70%)';
-        glowEffect.style.transform = 'translate(-50%, -50%)';
-        glowEffect.style.pointerEvents = 'none';
-        glowEffect.style.zIndex = '45';
-        glowEffect.style.opacity = '1';
-        glowEffect.style.transition = 'all 0.8s ease-out';
-        
-        tapEffects.appendChild(glowEffect);
-        
-        // Анимируем свечение
-        setTimeout(() => {
-          glowEffect.style.transform = 'translate(-50%, -50%) scale(2)';
-          glowEffect.style.opacity = '0';
-        }, 10);
-        
-        // Удаляем эффекты после анимации
-        setTimeout(() => {
-          if (glowEffect.parentNode === tapEffects) {
-            tapEffects.removeChild(glowEffect);
-          }
-          if (tapEffect.parentNode === tapEffects) {
-            tapEffects.removeChild(tapEffect);
-          }
-        }, 800);
-      };
-      
-      // Добавляем обработчик для кнопки City, чтобы она открывала город
-      const cityButton = document.querySelector('.city-button');
-      if (cityButton) {
-        cityButton.onclick = function() {
-          if (typeof openCityTab === 'function') {
-            openCityTab();
-          }
-        };
-      }
-    });
-    // Проверка, мобильное ли устройство
-    document.addEventListener('DOMContentLoaded', function() {
-      // Проверка типа устройства
-      checkDeviceType();
-      
-      // Симуляция загрузки
-      const startTime = Date.now();
-      
-      let progress = 0;
-      const loadingInterval = setInterval(() => {
-        progress += Math.random() * 3;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(loadingInterval);
-          
-          // Минимальное время загрузки
-          const elapsed = Date.now() - startTime;
-          const remainingTime = Math.max(0, 3000 - elapsed);
-          
-          setTimeout(() => {
-            // Скрытие экрана загрузки
-            document.getElementById('loading-screen').style.opacity = '0';
-            setTimeout(() => {
-              document.getElementById('loading-screen').style.display = 'none';
-              document.getElementById('main-content').style.display = 'flex';
-              
-              // Загрузка данных города, если функция доступна
-              if (typeof window.fixedCityModule !== 'undefined') {
-                console.log('Инициализация модуля города после загрузки...');
-                // Загрузка данных выполняется внутри модуля
-              }
-            }, 500);
-          }, remainingTime);
-        }
-        
-        // Обновление прогресс-бара
-        document.getElementById('loading-progress-bar').style.width = `${progress}%`;
-      }, 100);
-      
-      // Обработчики вкладок в модальных окнах
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-          const tabName = this.dataset.tab;
-          
-          // Удаляем активный класс со всех вкладок
-          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-          
-          // Скрываем все контенты вкладок
-          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-          
-          // Добавляем активный класс текущей вкладке
-          this.classList.add('active');
-          
-          // Показываем контент активной вкладки
-          document.getElementById(`${tabName}-tab`)?.classList.add('active');
-        });
-      });
-      
-      // Обработчики для фильтров друзей
-      document.querySelectorAll('.filter-button').forEach(button => {
-        button.addEventListener('click', function() {
-          document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          filterFriends(this.dataset.filter);
-        });
-      });
-      
-      // Обработчики для вкладок рейтинга
-      document.querySelectorAll('.leaderboard-tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-          document.querySelectorAll('.leaderboard-tab').forEach(t => t.classList.remove('active'));
-          this.classList.add('active');
-          renderLeaderboard(this.dataset.type);
-        });
-      });
-      
-      // Исправление переключения между вкладками
-      document.querySelectorAll('.nav-button').forEach(button => {
-        button.addEventListener('click', function() {
-          const tabName = this.dataset.tab;
-          
-          if (tabName === 'city') {
-            if (typeof window.fixedCityModule !== 'undefined') {
-              window.fixedCityModule.openCityTab();
-            } else {
-              console.error('Модуль города не найден');
-            }
-          } else if (tabName === 'main') {
-            // Закрываем все модальные окна
-            document.querySelectorAll('.modal, #city-tab, #fixed-city-tab').forEach(modal => {
-              modal.style.display = 'none';
-            });
-            
-            // Показываем основной контент
-            document.querySelector('.game-area').style.display = 'flex';
-          }
-          
-          // Обновляем активную кнопку
-          document.querySelectorAll('.nav-button').forEach(b => {
-            b.classList.remove('active');
-          });
-          this.classList.add('active');
-        });
-      });
-    });
-    
-    // Функция проверки типа устройства
-    function checkDeviceType() {
-      if (typeof window.checkDeviceType === 'function') {
-        window.checkDeviceType();
-      } else {
-        // Проверяем, является ли устройство мобильным
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        if (!isMobile) {
-          // Если не мобильное устройство, показываем экран проверки устройства
-          document.getElementById('device-check').style.display = 'flex';
-          document.getElementById('loading-screen').style.display = 'none';
-        }
-      }
-    }
-  </script>
 </body>
 </html>

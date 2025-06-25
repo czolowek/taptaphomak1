@@ -62,7 +62,7 @@ body::before {
 }
 
 .device-check-content {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     border: 2px solid #ff3b30;
     border-radius: 20px;
     padding: 40px;
@@ -70,15 +70,18 @@ body::before {
     max-width: 90%;
     width: 500px;
     box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .device-check-content h2 {
     color: #ffffff;
     text-shadow: 0 0 10px rgba(255, 59, 48, 1);
-    font-size: 28px;
+    font-size: 24px;
     margin-bottom: 20px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    line-height: 1.3;
 }
 
 .qr-container {
@@ -105,9 +108,10 @@ body::before {
     opacity: 0.9;
     margin-top: 20px;
     background: rgba(255, 59, 48, 0.2);
-    padding: 10px;
+    padding: 15px;
     border-radius: 10px;
     font-weight: bold;
+    line-height: 1.4;
 }
 
 /* ==========================================================================
@@ -124,14 +128,15 @@ body::before {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 9998;
     transition: opacity 0.5s ease;
 }
 
 #loading-image {
     width: auto;
-    height: 50vh;
-    max-height: 50vh;
+    height: 40vh;
+    max-height: 300px;
+    max-width: 80%;
     object-fit: contain;
     filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(0, 0, 255, 0.5));
     animation: pulse 2s infinite alternate;
@@ -150,7 +155,7 @@ body::before {
 
 .loading-title {
     margin-top: 20px;
-    font-size: 36px;
+    font-size: 32px;
     color: transparent;
     background: linear-gradient(90deg, #ff0033, #ffffff, #0066ff);
     background-size: 200% auto;
@@ -158,6 +163,8 @@ body::before {
     -webkit-background-clip: text;
     animation: gradientText 2s linear infinite;
     text-shadow: 0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(0, 0, 255, 0.7);
+    font-weight: 900;
+    letter-spacing: 2px;
 }
 
 @keyframes gradientText {
@@ -166,13 +173,14 @@ body::before {
 }
 
 .loading-progress-container {
-    width: 60%;
-    max-width: 300px;
-    height: 8px;
+    width: 70%;
+    max-width: 350px;
+    height: 10px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    margin-top: 20px;
+    border-radius: 5px;
+    margin-top: 30px;
     overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 #loading-progress-bar {
@@ -181,8 +189,9 @@ body::before {
     background: linear-gradient(90deg, #ff0033, #ffffff, #0066ff);
     background-size: 200% auto;
     animation: gradientProgress 2s linear infinite;
-    border-radius: 4px;
-    transition: width 0.3s ease;
+    border-radius: 5px;
+    transition: width 0.2s ease;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 @keyframes gradientProgress {
@@ -194,7 +203,7 @@ body::before {
    Основной контент
    ========================================================================== */
 #main-content {
-    display: flex;
+    display: none;
     flex-direction: column;
     height: 100vh;
     overflow: hidden;
@@ -309,13 +318,14 @@ body::before {
 .energy-icon {
     color: #18f2b2;
     font-size: 18px;
+    text-shadow: 0 0 5px rgba(24, 242, 178, 0.5);
 }
 
 .energy-bar-container {
     flex-grow: 1;
-    height: 6px;
+    height: 8px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
+    border-radius: 4px;
     overflow: hidden;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
@@ -324,14 +334,16 @@ body::before {
     height: 100%;
     width: 100%;
     background: linear-gradient(90deg, #18f2b2, #0bf);
-    border-radius: 3px;
+    border-radius: 4px;
     transition: width 0.3s ease;
+    box-shadow: 0 0 5px rgba(24, 242, 178, 0.3);
 }
 
 #energy-text {
     font-size: 12px;
     color: #18f2b2;
     text-shadow: 0 0 5px rgba(24, 242, 178, 0.5);
+    font-weight: bold;
 }
 
 /* ==========================================================================
@@ -498,64 +510,74 @@ body::before {
 
 .tentacle {
     position: absolute;
-    width: 8px;
-    background: linear-gradient(to bottom, #aa0000, #770000, #440000);
-    border-radius: 4px;
-    transform-origin: top center;
+    background: linear-gradient(135deg, #cc0000 0%, #990000 50%, #660000 100%);
+    border-radius: 50px;
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
 }
 
 .tentacle-1 {
+    width: 15px;
     height: 80px;
     top: 100px;
-    left: 20px;
+    left: 10px;
+    transform: rotate(-30deg);
     animation: tentacle-wave 2s ease-in-out infinite;
+    --initial-rotation: -30deg;
 }
 
 .tentacle-2 {
+    width: 12px;
     height: 70px;
     top: 110px;
-    left: 35px;
-    animation: tentacle-wave 2.2s ease-in-out infinite;
-    animation-delay: 0.3s;
+    left: 25px;
+    transform: rotate(-15deg);
+    animation: tentacle-wave 2.5s ease-in-out infinite 0.2s;
+    --initial-rotation: -15deg;
 }
 
 .tentacle-3 {
-    height: 75px;
-    top: 105px;
-    left: 50px;
-    animation: tentacle-wave 1.8s ease-in-out infinite;
-    animation-delay: 0.6s;
+    width: 10px;
+    height: 60px;
+    top: 120px;
+    left: 95px;
+    transform: rotate(15deg);
+    animation: tentacle-wave 2.2s ease-in-out infinite 0.4s;
+    --initial-rotation: 15deg;
 }
 
 .tentacle-4 {
-    height: 85px;
-    top: 95px;
-    right: 50px;
-    animation: tentacle-wave 2.1s ease-in-out infinite;
-    animation-delay: 0.9s;
+    width: 15px;
+    height: 80px;
+    top: 100px;
+    right: 10px;
+    transform: rotate(30deg);
+    animation: tentacle-wave 2s ease-in-out infinite 0.6s;
+    --initial-rotation: 30deg;
 }
 
 .tentacle-5 {
-    height: 70px;
-    top: 110px;
-    right: 35px;
-    animation: tentacle-wave 1.9s ease-in-out infinite;
-    animation-delay: 1.2s;
+    width: 12px;
+    height: 65px;
+    top: 115px;
+    right: 25px;
+    transform: rotate(20deg);
+    animation: tentacle-wave 2.3s ease-in-out infinite 0.8s;
+    --initial-rotation: 20deg;
 }
 
 .tentacle-6 {
-    height: 80px;
-    top: 100px;
-    right: 20px;
-    animation: tentacle-wave 2.3s ease-in-out infinite;
-    animation-delay: 1.5s;
+    width: 8px;
+    height: 50px;
+    top: 130px;
+    left: 85px;
+    transform: rotate(10deg);
+    animation: tentacle-wave 2.7s ease-in-out infinite 1s;
+    --initial-rotation: 10deg;
 }
 
 @keyframes tentacle-wave {
-    0%, 100% { transform: rotate(0deg) scaleY(1); }
-    25% { transform: rotate(15deg) scaleY(1.1); }
-    75% { transform: rotate(-15deg) scaleY(0.9); }
+    0%, 100% { transform: rotate(var(--initial-rotation, 0deg)) scale(1); }
+    50% { transform: rotate(calc(var(--initial-rotation, 0deg) + 10deg)) scale(1.1); }
 }
 
 /* Эффекты тапов */
@@ -563,20 +585,21 @@ body::before {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
-    z-index: 20;
+    z-index: 50;
 }
 
 .tap-effect {
     position: absolute;
     color: #ffcc00;
+    font-size: 20px;
     font-weight: bold;
-    font-size: 24px;
     text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
     animation: tap-effect-animation 1s ease-out forwards;
     pointer-events: none;
+    z-index: 100;
 }
 
 @keyframes tap-effect-animation {
@@ -586,7 +609,7 @@ body::before {
     }
     100% {
         opacity: 0;
-        transform: translateY(-50px) scale(1.2);
+        transform: translateY(-50px) scale(1.5);
     }
 }
 
@@ -594,72 +617,58 @@ body::before {
    Нижняя навигация
    ========================================================================== */
 .bottom-nav {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 2px;
-    padding: 8px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 5px;
     background: rgba(0, 0, 0, 0.8);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.3);
 }
 
 .nav-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 8px 4px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 10px;
+    padding: 8px 12px;
     border-radius: 10px;
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    transition: all 0.2s ease;
-    min-height: 60px;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 60px;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .nav-button.active {
-    background: linear-gradient(135deg, #ff3b30, #0a84ff);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 15px rgba(255, 59, 48, 0.4);
-}
-
-.nav-button:active {
-    transform: scale(0.95);
+    color: #ffffff;
+    background: rgba(255, 59, 48, 0.2);
+    box-shadow: 0 0 15px rgba(255, 59, 48, 0.3);
 }
 
 .nav-button i {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 4px;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+}
+
+.nav-button.active i {
+    color: #ff3b30;
+    text-shadow: 0 0 10px rgba(255, 59, 48, 0.8);
 }
 
 .nav-button span {
-    font-size: 10px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 1.2;
-}
-
-.notification-badge {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    background: #ff3b30;
-    color: white;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    font-size: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    box-shadow: 0 0 10px rgba(255, 59, 48, 0.5);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.5px;
 }
 
 /* ==========================================================================
@@ -677,18 +686,34 @@ body::before {
     align-items: center;
     z-index: 1000;
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
 }
 
 .modal-content {
-    background: linear-gradient(135deg, #0a1535 0%, #1a0a20 100%);
+    background: linear-gradient(135deg, #1a0f2e 0%, #2d1b3d 100%);
     border-radius: 20px;
-    padding: 0;
     max-width: 90%;
-    max-height: 90%;
+    max-height: 80%;
     width: 400px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 59, 48, 0.3);
+    box-shadow: 0 0 30px rgba(255, 59, 48, 0.2);
     overflow: hidden;
+    animation: modal-appear 0.3s ease-out;
+}
+
+@keyframes modal-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .modal-header {
@@ -696,63 +721,582 @@ body::before {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header h2 {
-    margin: 0;
-    font-size: 20px;
-    color: white;
+    color: #ffffff;
+    font-size: 18px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.modal-header h2 i {
+    color: #ff3b30;
+    margin-right: 8px;
 }
 
 .close-btn {
     background: none;
     border: none;
-    color: white;
+    color: #ffffff;
     font-size: 24px;
     cursor: pointer;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 5px;
     border-radius: 50%;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .close-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 59, 48, 0.2);
+    color: #ff3b30;
 }
 
 .modal-body {
     padding: 20px;
-    max-height: 60vh;
     overflow-y: auto;
+    max-height: 60vh;
 }
 
-.modal-tabs {
+/* ==========================================================================
+   Задания
+   ========================================================================== */
+.tasks-list {
     display: flex;
-    background: rgba(255, 255, 255, 0.05);
+    flex-direction: column;
+    gap: 15px;
 }
 
-.modal-tabs button {
-    flex: 1;
+.task-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
     padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.task-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 59, 48, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.task-item.completed {
+    background: rgba(0, 255, 0, 0.1);
+    border-color: rgba(0, 255, 0, 0.3);
+}
+
+.task-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.task-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #ff3b30, #0066ff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    box-shadow: 0 0 15px rgba(255, 59, 48, 0.3);
+}
+
+.task-icon i {
+    color: white;
+    font-size: 16px;
+}
+
+.task-info h3 {
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.task-reward {
+    color: #ffcc00;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.task-progress {
+    margin-top: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff3b30, #ffcc00);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+/* ==========================================================================
+   Друзья
+   ========================================================================== */
+.friends-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.friends-tab {
+    flex: 1;
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 12px;
+    font-size: 12px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
 }
 
-.modal-tabs button.active {
+.friends-tab.active {
+    background: rgba(255, 59, 48, 0.2);
+    color: #ffffff;
+}
+
+.friends-tab i {
+    margin-right: 5px;
+}
+
+.friends-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.friend-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    transition: all 0.3s ease;
+}
+
+.friend-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 59, 48, 0.3);
+    transform: translateY(-1px);
+}
+
+.friend-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-size: 16px;
     color: white;
+    position: relative;
+}
+
+.friend-avatar.blue {
+    background: linear-gradient(135deg, #0066ff, #0084ff);
+}
+
+.friend-avatar.red {
+    background: linear-gradient(135deg, #ff3b30, #ff6347);
+}
+
+.friend-avatar.green {
+    background: linear-gradient(135deg, #34c759, #32d74b);
+}
+
+.online-indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background: #00ff00;
+    border: 2px solid #1a0f2e;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+.friend-info {
+    flex: 1;
+}
+
+.friend-name {
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.friend-stats {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+}
+
+.gift-btn {
+    background: linear-gradient(135deg, #ff3b30, #ff6347);
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gift-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 59, 48, 0.5);
+}
+
+.invite-section {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.invite-btn {
+    background: linear-gradient(135deg, #0066ff, #0084ff);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 132, 255, 0.3);
+}
+
+.invite-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 132, 255, 0.5);
+}
+
+.invite-btn i {
+    margin-right: 8px;
+}
+
+/* ==========================================================================
+   Рейтинг
+   ========================================================================== */
+.leaderboard-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.leaderboard-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.leaderboard-tab.active {
+    background: rgba(255, 59, 48, 0.2);
+    color: #ffffff;
+}
+
+.leaderboard-tab i {
+    margin-right: 5px;
+}
+
+.leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    transition: all 0.3s ease;
+}
+
+.leaderboard-item.top-3 {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.leaderboard-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 59, 48, 0.3);
+    transform: translateY(-1px);
+}
+
+.rank {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.rank.gold {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #8b6f00;
+}
+
+.rank.silver {
+    background: linear-gradient(135deg, #c0c0c0, #e6e6e6);
+    color: #666666;
+}
+
+.rank.bronze {
+    background: linear-gradient(135deg, #cd7f32, #daa520);
+    color: #654321;
+}
+
+.rank.regular {
     background: rgba(255, 255, 255, 0.1);
-    border-bottom-color: #ff3b30;
+    color: #ffffff;
+}
+
+.leader-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-size: 16px;
+    color: white;
+}
+
+.leader-avatar.blue {
+    background: linear-gradient(135deg, #0066ff, #0084ff);
+}
+
+.leader-avatar.red {
+    background: linear-gradient(135deg, #ff3b30, #ff6347);
+}
+
+.leader-avatar.green {
+    background: linear-gradient(135deg, #34c759, #32d74b);
+}
+
+.leader-info {
+    flex: 1;
+}
+
+.leader-name {
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.leader-stats {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+}
+
+.leader-score {
+    color: #ffcc00;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+/* ==========================================================================
+   Головоломки
+   ========================================================================== */
+.puzzle-modal .modal-content {
+    width: 90%;
+    max-width: 400px;
+    max-height: 90%;
+}
+
+.puzzle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.puzzle-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.puzzle-progress-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.puzzle-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff3b30, #ffcc00);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.difficulty-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.difficulty-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.difficulty-btn.active,
+.difficulty-btn:hover {
+    background: rgba(255, 59, 48, 0.2);
+    border-color: rgba(255, 59, 48, 0.5);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.puzzle-grid {
+    display: grid;
+    gap: 5px;
+    max-width: 300px;
+    margin: 0 auto;
+    aspect-ratio: 1;
+}
+
+.puzzle-cell {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.puzzle-cell:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.puzzle-cell.matched {
+    animation: matched-pulse 0.5s ease;
+}
+
+@keyframes matched-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   Бустеры
+   ========================================================================== */
+.boosters-container {
+    position: fixed;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 200;
+}
+
+.booster-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+#double-coins-booster {
+    background: linear-gradient(135deg, #ff3b30, #ff6347);
+}
+
+#energy-booster {
+    background: linear-gradient(135deg, #18f2b2, #0bf);
+}
+
+.booster-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 59, 48, 0.5);
+}
+
+.booster-btn:active {
+    transform: scale(0.95);
+}
+
+.booster-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.booster-btn i {
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.booster-btn span {
+    font-size: 10px;
+    font-weight: bold;
 }
 
 /* ==========================================================================
@@ -762,248 +1306,227 @@ body::before {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 10000;
-    pointer-events: none;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .notification {
     background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 15px 20px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    border-left: 4px solid #ff3b30;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    animation: slideIn 0.3s ease;
-    pointer-events: auto;
+    border-left: 4px solid;
+    border-radius: 8px;
+    padding: 15px;
     max-width: 300px;
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: notification-slide 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .notification.success {
-    border-left-color: #34c759;
+    border-color: #00ff00;
+    background: rgba(0, 255, 0, 0.1);
 }
 
 .notification.error {
-    border-left-color: #ff3b30;
+    border-color: #ff3b30;
+    background: rgba(255, 59, 48, 0.1);
 }
 
 .notification.info {
-    border-left-color: #0a84ff;
+    border-color: #0084ff;
+    background: rgba(0, 132, 255, 0.1);
 }
 
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
+.notification.trophy {
+    border-color: #ffcc00;
+    background: rgba(255, 204, 0, 0.1);
+}
+
+@keyframes notification-slide {
+    0% {
         opacity: 0;
+        transform: translateX(100%);
     }
-    to {
-        transform: translateX(0);
+    100% {
         opacity: 1;
+        transform: translateX(0);
     }
 }
 
 /* ==========================================================================
-   Головоломки
+   Адаптивность для мобильных устройств
    ========================================================================== */
-.puzzle-info {
-    padding: 15px 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+@media (max-width: 480px) {
+    .device-check-content h2 {
+        font-size: 20px;
+    }
+    
+    .qr-container {
+        width: 200px;
+        height: 200px;
+    }
+    
+    #loading-image {
+        height: 35vh;
+        max-height: 250px;
+    }
+    
+    .loading-title {
+        font-size: 24px;
+    }
+    
+    .kraken {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .kraken-head {
+        width: 100px;
+        height: 100px;
+        left: 40px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        max-height: 85%;
+    }
+    
+    .boosters-container {
+        right: 5px;
+    }
+    
+    .booster-btn {
+        width: 45px;
+        height: 45px;
+    }
+    
+    #notifications-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+    
+    .notification {
+        max-width: none;
+    }
 }
 
-.puzzle-stats {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+@media (max-height: 600px) {
+    .top-bar {
+        padding: 8px 15px;
+    }
+    
+    .energy-container {
+        padding: 6px 15px;
+    }
+    
+    .bottom-nav {
+        padding: 8px 5px;
+    }
+    
+    .nav-button {
+        padding: 6px 10px;
+        min-width: 50px;
+    }
+    
+    .nav-button i {
+        font-size: 18px;
+    }
+    
+    .nav-button span {
+        font-size: 9px;
+    }
 }
 
-.puzzle-stats .stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.puzzle-progress-container {
-    width: 100%;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-    overflow: hidden;
-}
-
-.puzzle-progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #ff3b30, #0a84ff);
-    border-radius: 3px;
-    transition: width 0.3s ease;
-}
-
-.difficulty-selector {
-    display: flex;
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.difficulty-btn {
-    flex: 1;
-    padding: 12px;
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.difficulty-btn.active {
-    color: white;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.puzzle-grid {
-    display: grid;
-    gap: 5px;
-    padding: 20px;
-    justify-content: center;
-}
-
-.puzzle-cell {
-    width: 50px;
-    height: 50px;
-    background: #333;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 2px solid transparent;
-}
-
-.puzzle-cell:hover {
-    transform: scale(1.05);
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-.puzzle-cell.matched {
-    opacity: 0.7;
-    animation: cell-match 0.5s ease;
-}
-
-@keyframes cell-match {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+/* Улучшенная адаптивность для планшетов */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .kraken {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .kraken-head {
+        width: 150px;
+        height: 150px;
+        left: 50px;
+    }
+    
+    .modal-content {
+        width: 80%;
+        max-width: 500px;
+    }
 }
 
 /* ==========================================================================
-   Задания, друзья, рейтинг
+   Анимации и эффекты
    ========================================================================== */
-.task-item, .friend-item, .leaderboard-item {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    margin-bottom: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
 }
 
-.task-icon, .friend-avatar, .player-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    font-size: 18px;
+.shake {
+    animation: shake 0.5s ease-in-out;
 }
 
-.task-icon {
-    background: linear-gradient(135deg, #ff3b30, #0a84ff);
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 10px rgba(255, 59, 48, 0.5); }
+    50% { box-shadow: 0 0 30px rgba(255, 59, 48, 0.8); }
 }
 
-.friend-avatar.blue, .player-avatar.blue {
-    background: linear-gradient(135deg, #0a84ff, #34c759);
+.glow {
+    animation: glow 1s ease-in-out infinite;
 }
 
-.friend-avatar.red, .player-avatar.red {
-    background: linear-gradient(135deg, #ff3b30, #ff9500);
+/* Эффект плавного появления */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
 }
 
-.friend-avatar.green, .player-avatar.green {
-    background: linear-gradient(135deg, #34c759, #30d158);
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
-.task-content, .friend-info, .player-info {
-    flex: 1;
+/* Эффект отскока */
+.bounce {
+    animation: bounce 0.6s ease;
 }
 
-.task-content h3, .friend-info h3, .player-info h3 {
-    margin: 0 0 5px 0;
-    font-size: 16px;
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(0, 0, 0);
+    }
+    40%, 43% {
+        transform: translate3d(0, -10px, 0);
+    }
+    70% {
+        transform: translate3d(0, -5px, 0);
+    }
+    90% {
+        transform: translate3d(0, -2px, 0);
+    }
 }
 
-.progress-bar {
-    width: 100%;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.1);
+/* Скрытие скроллбаров */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 3px;
-    overflow: hidden;
-    margin: 5px 0;
 }
 
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #ff3b30, #0a84ff);
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 59, 48, 0.5);
     border-radius: 3px;
-    transition: width 0.3s ease;
 }
 
-.task-reward {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: #ffcc00;
-    font-weight: bold;
-}
-
-.online-indicator {
-    position: absolute;
-    bottom: 2px;
-    right: 2px;
-    width: 12px;
-    height: 12px;
-    background: #34c759;
-    border-radius: 50%;
-    border: 2px solid white;
-}
-
-.rank {
-    margin-right: 15px;
-    font-weight: bold;
-    min-width: 30px;
-}
-
-.rank .fa-crown.gold {
-    color: #ffcc00;
-}
-
-.rank .fa-medal.silver {
-    color: #c0c0c0;
-}
-
-.rank .fa-medal.bronze {
-    color: #cd7f32;
-}
-
-.empty-state {
-    text-align: center;
-    padding: 40px;
-    color: rgba(255, 255, 255, 0.5);
-    font-style: italic;
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 59, 48, 0.7);
 }
