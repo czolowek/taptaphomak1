@@ -15,7 +15,7 @@ nest_asyncio.apply()
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         keyboard = [
-            [InlineKeyboardButton("🎮 Играть в TapKraken", url="https://czolowek.github.io/taptaphomak0/")],
+            [InlineKeyboardButton("🎮 Играть в TapKraken", url="https://czolowek.github.io/taptaphomak1/")],
             [InlineKeyboardButton("📢 Пригласить друзей", callback_data="invite")],
             [InlineKeyboardButton("📋 Правила игры", callback_data="rules")]
         ]
@@ -55,7 +55,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text="🎉 Добро пожаловать в TapKraken! Нажмите на кнопку, чтобы начать игру.",
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Играть", url="https://czolowek.github.io/taptaphomak0/")]])
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Играть", url="https://czolowek.github.io/taptaphomak1/")]])
         )
 
 # Команда /help
@@ -79,7 +79,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         keyboard = [
-            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak0/")],
+            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak1/")],
             [InlineKeyboardButton("📋 Правила", callback_data="rules"), 
              InlineKeyboardButton("✍️ Отзыв", callback_data="review")]
         ]
@@ -104,7 +104,7 @@ async def invite(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Генерируем QR-код с помощью callback_data
         keyboard = [
             [InlineKeyboardButton("🔗 Отправить приглашение", switch_inline_query="Присоединяйся к TapKraken!")],
-            [InlineKeyboardButton("🎮 Играть в TapKraken", url="https://czolowek.github.io/taptaphomak0/")]
+            [InlineKeyboardButton("🎮 Играть в TapKraken", url="https://czolowek.github.io/taptaphomak1/")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -113,7 +113,7 @@ async def invite(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"🎉 *{username} приглашает тебя в игру TapKraken!* 🐙\n\n"
             f"🔗 Присоединяйся к увлекательной игре - кликай на Кракена и собирай сокровища!\n\n"
             f"💥 Выполняй задания, решай головоломки и побеждай друзей в таблице лидеров!\n\n"
-            f"👉 Начни играть прямо сейчас: https://czolowek.github.io/taptaphomak0/"
+            f"👉 Начни играть прямо сейчас: https://czolowek.github.io/taptaphomak1/"
         )
         
         # Отправляем приглашение с картинкой или без (если не найдена)
@@ -168,7 +168,7 @@ async def rules(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         
         keyboard = [
-            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak0/")],
+            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak1/")],
             [InlineKeyboardButton("🔙 Назад", callback_data="start")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -227,7 +227,7 @@ async def collect_feedback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             print(f"Ошибка при записи отзыва в файл: {file_error}")
 
         # Кнопка "Играть"
-        keyboard = [[InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak0/")]]
+        keyboard = [[InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak1/")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
 
         await context.bot.send_message(
@@ -256,7 +256,7 @@ async def info(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         
         keyboard = [
-            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak0/")],
+            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak1/")],
             [InlineKeyboardButton("📢 Пригласить друзей", callback_data="invite")],
             [InlineKeyboardButton("✍️ Оставить отзыв", callback_data="review")]
         ]
@@ -283,7 +283,7 @@ async def daily_reward(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"⏰ Приходите завтра за новой наградой!"
         )
         
-        keyboard = [[InlineKeyboardButton("🎮 Играть сейчас", url="https://czolowek.github.io/taptaphomak0/")]]
+        keyboard = [[InlineKeyboardButton("🎮 Играть сейчас", url="https://czolowek.github.io/taptaphomak1/")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await context.bot.send_message(
@@ -307,7 +307,7 @@ async def gift(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [InlineKeyboardButton("🪙 50 монет", callback_data="gift_coins_50")],
             [InlineKeyboardButton("⚡ Энергия", callback_data="gift_energy")],
             [InlineKeyboardButton("🚀 Бустер", callback_data="gift_booster")],
-            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak0/")]
+            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak1/")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -332,7 +332,7 @@ async def boost(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [InlineKeyboardButton("🚀 2× множитель (30 мин)", callback_data="boost_double")],
             [InlineKeyboardButton("⚡ Бесконечная энергия (15 мин)", callback_data="boost_energy")],
             [InlineKeyboardButton("💰 +50% монет (1 час)", callback_data="boost_coins")],
-            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak0/")]
+            [InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak1/")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -380,7 +380,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=f"⭐ Спасибо за вашу оценку! Вы поставили игре {rating} из 5 звезд.",
-                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak0/")]])
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎮 Играть", url="https://czolowek.github.io/taptaphomak1/")]])
             )
         elif callback_data.startswith("gift_") or callback_data.startswith("boost_"):
             # Обработка подарков и бустеров (эмуляция)
